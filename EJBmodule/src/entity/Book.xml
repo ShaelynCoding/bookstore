@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="entity.Book">
+        <table name="book" schema="Store" catalog=""/>
+        <attributes>
+            <id name="bookIsdn">
+                <column name="bookISDN"/>
+            </id>
+            <basic name="bookAuth">
+                <column name="bookAuth"/>
+            </basic>
+            <basic name="bookName">
+                <column name="bookName"/>
+            </basic>
+            <basic name="bookPrice">
+                <column name="bookPrice"/>
+            </basic>
+            <basic name="bookNum">
+                <column name="bookNum"/>
+            </basic>
+            <basic name="bookType">
+                <column name="bookType"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>
