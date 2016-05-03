@@ -21,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class ChatEndPoint {
     private static final Set<ChatEndPoint> connections=new CopyOnWriteArraySet<>();
     private Session session;
-    private String user;
+    private static String user;
     private  static String getUsers()
     {
         JSONObject object = new JSONObject();
@@ -105,6 +105,7 @@ public class ChatEndPoint {
     {
         System.out.println("...............end...........");
         connections.remove(this);
+        broadcast(getUsers());
     }
 }
 

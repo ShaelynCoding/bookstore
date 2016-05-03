@@ -62,13 +62,13 @@ function disconnect() {
 
 }
 function chat() {
-	var value=$("#msg").val();
-	if(value==undefined || value=="")
+	var text=$("#msg").val();
+	if(text==undefined || text=="")
 		return;
 	sendMsg(
 		{
 			action:"chat",
-			Text:value
+			value:text
 		}
 	);
 
@@ -85,17 +85,15 @@ function addChat(object) {
 	}
 	var contentDoc=$("#content");
 	contentDoc.prepend(singleContent);
-
+	var newChat=contentDoc.find(".ChatMsg");
+	newChat.fadeIn("slow");
+	newChat.find(".imgUser").html(object.user);
+	newChat.find(".msgText").html(object.text);
 }
-// function displayMessage(data,style) {
-// 	var message = document.getElementById("content");
-// 	message.setAttribute("class",style);
-// 	message.value=data;
-//
-// }
+
 document.onkeydown = function(event){
 	var e = event || window.event || arguments.callee.caller.arguments[0];
 	if(e && e.keyCode == 13){ // enter 键
-		emit();
+		chat();
 	}
 }; 

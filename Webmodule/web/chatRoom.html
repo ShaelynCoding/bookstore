@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head onunload="disconnect()">
+<head>
     <meta charset="UTF-8">
     <title>Chat Room</title>
     <script src="UI/js/jquery-2.1.4.js"></script>
     <script src="UI/bootstrap/dist/css/bootstrap-theme.min.css"></script>
     <script src="UI/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!--<script type="text/javascript" src="logic/core.js"></script>-->
+    <script type="text/javascript" src="logic/common.js"></script>
+    <script type="text/javascript" src="logic/user.js"></script>
+    <script type="text/javascript" src="logic/book.js"></script>
     <script type="text/javascript" src="logic/chat.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -21,7 +23,14 @@
             <h3 class="panel-title">聊天室</h3>
         </div>
         <div class="panel-body" id="content">
-
+            <div class="ChatMsg" hidden="hidden">
+                <div class="imgUser">
+                    User
+                </div>
+                <div class="msgText">
+                    Text
+                </div>
+            </div>
         </div>
     </div>
     <hr/>

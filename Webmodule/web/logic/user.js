@@ -52,6 +52,14 @@ function logout() {
         self.location="index.jsp";
 
     })
-
-
+}
+function getUserName() {
+    ajax("useraction","get",{
+        operation:"getUserName"
+    },
+    function (data) {
+        return data;
+        
+    });
+    
 }

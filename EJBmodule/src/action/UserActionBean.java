@@ -3,7 +3,6 @@ package action;
 
 import Dao.userDAO;
 import entity.User;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 

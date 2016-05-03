@@ -24,12 +24,23 @@ public class UserServlet extends HttpServlet{
     private UserAction userAction;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("doPost starting ");
-        String op=request.getParameter("operation");
-        if(op.equals("logout"))
-        {
-            request.logout();
+        String name=request.getParameter("username");
+        String password=request.getParameter("password");
+        request.getSession(true);
+        request.logout();
+        request.login(name, password);
+        String role="guest";
+        if(request.isUserInRole("admin")) {
+            role="admin";
         }
-
+        else if(request.isUserInRole("user"))
+        {
+            role="user";
+        }
+        request.getSession().setAttribute("user", name+"@"+role);
+        if(role.equals("admin"))
+            response.sendRedirect("manage.jsp");
+        else response.sendRedirect("bookstore.jsp");
     }
 
 
@@ -38,21 +49,8 @@ public class UserServlet extends HttpServlet{
         System.out.println("get");
         String op=request.getParameter("operation");
         PrintWriter writer=response.getWriter();
-        if(op.equals("login"))
-        {
-            String name=request.getParameter("userName");
-            String password=request.getParameter("userPwd");
-            request.getSession(true);
-            request.logout();
-            request.login(name, password);
-            Principal role=request.getUserPrincipal();
-            request.getSession().setAttribute("user",role);
-            writer.print(role.toString());
 
-//          writer.print("kkkk");
-
-        }
-        else if(op.equals("register"))
+        if(op.equals("register"))
         {
             String name=request.getParameter("regName");
             String password=request.getParameter("regPwd");
@@ -80,6 +78,16 @@ public class UserServlet extends HttpServlet{
         {
             Integer userid=Integer.parseInt(request.getParameter("userId"));
             userAction.delUser(userid);
+        }
+        else if(op.equals("getUserName")) {
+            String nameAndRole = (String) request.getSession().getAttribute("user");
+            if (nameAndRole == "" || nameAndRole == null)
+                writer.print("guest");
+            else {
+                String[] tmp = nameAndRole.split("@");
+
+                writer.print(tmp[0]);
+            }
         }
         writer.flush();
         writer.close();
