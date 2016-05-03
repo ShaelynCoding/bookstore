@@ -11,8 +11,12 @@ function login()
         username:$("#username").val(),
         password:$("#password").val()
     },function (role) {
-        
+        alert(role);
         setCookie("user",role,"d1","/");
+        var i=role.indexOf("admin");
+        if(role.indexOf("admin")>=0)
+            self.location="manage.jsp";
+        else self.location="bookstore.jsp";
         
     });
 }
@@ -65,7 +69,7 @@ function logout() {
  * @returns {*}
  */
 function getUserName() {
-    var cookie=getCookie();
+    var cookie=getCookie("user");
     var tmpArr=new Array();
     tmpArr=cookie.split("@");
     return tmpArr[0];

@@ -72,7 +72,7 @@ public class CartServlet extends HttpServlet {
         }
         else if(op.equals("buybook"))
         {
-            String name=(String)request.getSession().getAttribute("username");
+            String name=(String)request.getParameter("username");
             sendBuyMsg(name);
             cart.clear();
 

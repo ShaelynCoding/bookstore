@@ -25,7 +25,7 @@
         <ul class="nav navbar-nav navbar-right" >
             <li class="active" data-toggle="modal"   data-target="#cartModal"><a onclick="shopCart()"><span class="glyphicon glyphicon-shopping-cart"></span>shop cart</a></li>
             <li class="active" data-toggle="modal"   data-target="#dataModal"><a onclick="showdata()"><span class = "glyphicon glyphicon-list" ></span>shop record</a></li>
-            <li class="active"><a href="chatRoom.html"><span class="glyphicon glyphicon-comment">Chat Room</span></a></li>
+            <li class="active"><a href="chatRoom.html"><span class="glyphicon glyphicon-comment"></span>Chat Room</a></li>
             <li class="active"><a onclick="logout()"><span class = "glyphicon glyphicon-user"></span>logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 
         </ul>
@@ -100,25 +100,9 @@
                 </button>
 
             </div>
-            <div class="modal-body" id="cartbody" >
-                <table class = "table table-bordered">
-                    <tr>
-                        <td>ISBN</td>
-                        <td>书名</td>
-                        <td>数量</td>
-                    </tr>
-                    <div >
-                        <tr class="bookCart">
-                            <td class="id"></td>
-                            <td class="name"></td>
-                            <td class="num"></td>
-                            <td>
-                                <button type="button" class="btn btn-primary" id="remove" onclick = "delCart()">
-                                    ×
-                                </button>
-                            </td>
-                        </tr>
-                    </div>
+            <div class="modal-body" >
+                <table class = "table table-bordered" id="cartbody" >
+
                 </table>
 
             </div>
@@ -170,9 +154,13 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-        ajax("bookaction","get",{
-            operation:"showBooks"
+        var cookie=getCookie("user");
+        var tmp=new Array();
+        tmp=cookie.split("@");
+        var role=tmp[1];
+        ajax("bookaction","post",{
+            operation:"showBooks",
+            role:role
         },function (jsonStr) {
             var jsonArr=JSON.parse(jsonStr);
             displayBooks(jsonArr);

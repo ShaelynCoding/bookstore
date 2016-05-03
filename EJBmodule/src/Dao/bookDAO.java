@@ -30,6 +30,8 @@ public class bookDAO {
         return outline;
 
     }
+
+
     public static Book getByISBN(String id)
     {
         String jbql="select b from book as b where b.bookIsdn='"+id+"'";
@@ -113,6 +115,7 @@ public class bookDAO {
         query.setParameter(1,price);
         query.setParameter(2,num);
         query.setParameter(3,type);
+        query.setParameter(4,id);
         query.executeUpdate();
     }
 }

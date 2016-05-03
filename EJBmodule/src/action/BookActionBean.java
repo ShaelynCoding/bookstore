@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +31,28 @@ public class BookActionBean implements BookAction{
         List<Book> books = bookDAO.getBooks();
         JsonConfig exclude=new JsonConfig();
         out= JSONArray.fromObject(books,exclude).toString();
+        return out;
+
+    }
+    public String getBookByGuest(String[] types)
+    {
+        bookDAO.setEntity(entityManager);
+        List<Book> books = bookDAO.getBooks();
+        List<Book> guestBooks=new ArrayList<Book>();
+        for(int i=0;i<books.size();i++)
+        {
+            for(int j=0;j<types.length;j++)
+            {
+                if(books.get(i).getBookType().matches(".*"+types[j]+".*"))
+                {
+                    guestBooks.add(books.get(i));
+                    break;
+                }
+
+            }
+        }
+        JsonConfig exclude=new JsonConfig();
+        String out= JSONArray.fromObject(guestBooks,exclude).toString();
         return out;
 
     }

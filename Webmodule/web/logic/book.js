@@ -1,6 +1,8 @@
 /**
  * 显示购物车
  */
+var singlePaper="";
+var single="";
 function shopCart()
 {
     ajax("cart","post",
@@ -9,34 +11,39 @@ function shopCart()
         },function (jsonStr) {
             var paperArray = eval("(" + jsonStr + ")");
             displayCart(paperArray);
+            changeClick(paperArray);
         });
 
 }
-/**
- * 显示
- * @param paperArray
- */
 function displayCart(paperArray) {
-    var papersDoc = $("#cartModal");
-    var singlePaper = papersDoc.html();
-    papersDoc.html("");
-    var len = 0;
-    if (paperArray != undefined)
-        len = paperArray.length;
-    for (var i = 0; i < len; i++) {
-        papersDoc.append(singlePaper);
+
+    var out="<tr><td>ISBN</td><td>书名</td><td>数量</td><td>操作</td></tr>";
+
+
+    var len=0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
+    for(var i=0;i<len;i++)
+    {
+        out+=("<tr><td>"+paperArray[i].bookISBN+"</td><td>"
+        +paperArray[i].bookName+"</td><td>"+paperArray[i].buyNum
+        +"</td><td><button type='button' class='btn btn-primary' id='remove' onclick = ''>×</button></td></tr>");
     }
-    for (i = 0; i < len; i++) {
-        var paperHtml = papersDoc.find(".bookCart").eq(i);
-        paperHtml.find(".id").html(paperArray[i].bookISBN);
-        paperHtml.find(".name").html(paperArray[i].bookName);
-        paperHtml.find(".num").html( paperArray[i].buyNum);
-        paperHtml.find("#remove").attr("onclick","delCart('"+paperArray[i].bookISBN+"')");
+    $("#cartbody").html(out);
 
+}
+function changeClick(paperArray) {
+    var len=0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
+    for(var i=0;i<len;i++)
+    {
 
+        $("#cartbody").find("#remove").eq(i).attr("onclick","delCart('"+paperArray[i].bookISBN+"')");
     }
 
 }
+
 
 /**
  * 从购物车删除记录
@@ -82,12 +89,17 @@ function showDetail(bookid)
  */
 function buybook()
 {
-    
-  ajax("cart","post",{
-      operation:"buybook"
-  },function (data) {
-      $("#thank").html(data);
-  });
+    var cookie=getCookie("user");
+    var tmp=cookie.split("@");
+    ajax("cart","post",{
+          operation:"buybook",
+          username:tmp[0]
+      },function () {
+          $("#cartModal").modal("hide");
+
+
+          //$("#thank").html(data);
+    });
 }
 /**
  * 添加到购物车
@@ -114,13 +126,13 @@ function addCart(bookid) {
 function displayBooks(paperArray) {
     //init
     var papersDoc = $("#books");
-    var singlePaper = papersDoc.html();
+    single = single=="" ? papersDoc.html() : single;
     papersDoc.html("");
     var len = 0;
     if (paperArray != undefined)
         len = paperArray.length;
     for (var i = 0; i < len; i++) {
-        papersDoc.append(singlePaper);
+        papersDoc.append(single);
     }
     for (i = 0; i < len; i++) {
         var paperHtml = papersDoc.find(".bookInfo").eq(i);
@@ -140,34 +152,34 @@ function displayBooks(paperArray) {
 
 //-----------------------------------------
 
-function logout()
-{
-
-    $.post("logout",
-        {
-
-        });
-}
-function searchbook()
-{
-
-    $.post("searchbook",
-        {
-            searchContext:$("#search").val()
-        },
-        function(data,status)
-        {
-            $("#searchbody").html(data);
-        });
-}
-function showdata()
-{
-
-    $.post("showdata",
-        {
-        },
-        function(data,status)
-        {
-            $("#databody").html(data);
-        });
-}
+// function logout()
+// {
+//
+//     $.post("logout",
+//         {
+//
+//         });
+// }
+// function searchbook()
+// {
+//
+//     $.post("searchbook",
+//         {
+//             searchContext:$("#search").val()
+//         },
+//         function(data,status)
+//         {
+//             $("#searchbody").html(data);
+//         });
+// }
+// function showdata()
+// {
+//
+//     $.post("showdata",
+//         {
+//         },
+//         function(data,status)
+//         {
+//             $("#databody").html(data);
+//         });
+// }

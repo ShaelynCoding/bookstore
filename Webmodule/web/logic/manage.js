@@ -31,6 +31,7 @@ function querybook()
         {
             var json=JSON.parse(jsonStr)
             displayBook(json);
+            changeClick(json);
         });
 }
 
@@ -39,27 +40,36 @@ function querybook()
  * @param paperArray
  */
 function displayBook(paperArray) {
-    var papersDoc = $("#querybody");
-    var singlePaper = papersDoc.html();
-    papersDoc.html("");
-    var len = 0;
-    if (paperArray != undefined)
-        len = paperArray.length;
-    for (var i = 0; i < len; i++) {
-        papersDoc.append(singlePaper);
+
+    var out="<tr><td>ISBN</td><td>书名</td><td>作者</td><td>分类</td><td>库存</td><td>价格</td><td>操作</td></tr>";
+    var len=0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
+    for(var i=0;i<len;i++)
+    {
+        out+=("<tr><td>"+paperArray[i].bookIsdn+"</td><td>"
+        +paperArray[i].bookName+"</td><td>"+paperArray[i].bookAuth
+        +"</td><td>"+paperArray[i].bookType+"</td><td>"+paperArray[i].bookNum
+        +"</td><td>"+paperArray[i].bookPrice+
+        "</td><td><button type='button' class='btn btn-primary' id='change3' onclick=''>×</button></td><td>" +
+        "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modiModal' id='change4' onclick = ''><span class='glyphicon glyphicon-pencil'></span></button></td></tr>");
     }
-    for (i = 0; i < len; i++) {
-        var paperHtml = papersDoc.find(".bookShow").eq(i);
-        paperHtml.find(".id").html(paperArray[i].bookIsdn);
-        paperHtml.find(".name").html(paperArray[i].bookName);
-        paperHtml.find(".num").html( paperArray[i].bookNum);
-        paperHtml.find(".auth").html(paperArray[i].bookAuth);
-        paperHtml.find(".type").html(paperArray[i].bookType);
-        paperHtml.find(".price").html(paperArray[i].bookPrice);
-        paperHtml.find("#change3").attr("onclick","delBook('"+paperArray[i].bookISDN+"')");
-        paperHtml.find("#change4").attr("onclick","trans('"+paperArray[i].bookISDN+"')");
-        
+    $("#querybody").html(out);
+
+}
+function changeClick(paperArray) {
+    var len=0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
+    for(var i=0;i<len;i++)
+    {
+
+        $("#querybody").find("#change3").eq(i).attr("onclick","delBook('"+paperArray[i].bookIsdn+"')");
+        $("#querybody").find("#change4").eq(i).attr("onclick","trans('"+paperArray[i].bookIsdn+"')");
+
+
     }
+
 }
 /**
  * 下架书
@@ -70,6 +80,8 @@ function delBook(bookid)
     ajax("bookaction","post",{
         operation:"delBook",
         bookISDN:bookid
+    },function () {
+        $("#queryModal").modal("hide");
     });
 }
 function trans(bookid)
@@ -84,11 +96,15 @@ function trans(bookid)
  */
 function modiBook() 
 {
-    ajax("modiBook","post",{
+    ajax("bookaction","post",{
+        operation:"modiBook",
         bookid:$("#isbn2").text(),
         price:$("#price2").val(),
         num:$("#num2").val(),
         type:$("#type2").val()
+    },function () {
+        $("#modiModal").modal("hide");
+
     });
        
 }
@@ -102,30 +118,37 @@ function queryuser()
         userName:$("#uame").val()
     },function (jsonStr) {
         var jsonArr=JSON.parse(jsonStr);
-        
+        displayUsers(jsonArr);
+        changeRemove(jsonArr);
     });
 
 }
-function displayUser(paperArray) {
-    var papersDoc = $("#userModal");
-    var singlePaper = papersDoc.html();
-    papersDoc.html("");
-    var len = 0;
-    if (paperArray != undefined)
-        len = paperArray.length;
-    for (var i = 0; i < len; i++) {
-        papersDoc.append(singlePaper);
-    }
-    for (i = 0; i < len; i++) {
-        var paperHtml = papersDoc.find(".userShow").eq(i);
-        paperHtml.find(".id").html(paperArray[i].userId);
-        paperHtml.find(".name").html(paperArray[i].userName);
-        paperHtml.find(".password").html( paperArray[i].userPwd);
-        paperHtml.find(".email").html( paperArray[i].userEmail);
 
-        paperHtml.find("#change5").attr("onclick","delUser('"+paperArray[i].userId+"')");
+function displayUsers(paperArray) {
 
+    var out="<tr><td>ID</td><td>用户名</td><td>密码</td><td>邮箱</td><td>操作</td></tr>";
+    var len=0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
+    for(var i=0;i<len;i++)
+    {
+        out+=("<tr><td>"+paperArray[i].userId+"</td><td>"
+        +paperArray[i].userName+"</td><td>"+paperArray[i].userPwd+"</td><td>"+paperArray[i].userEmail
+        +"</td><td><button type='button' class='btn btn-primary' id='change5' onclick = ''>×</button></td></tr>");
     }
+    $("#userbody").html(out);
+
+}
+function changeRemove(paperArray) {
+    var len=0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
+    for(var i=0;i<len;i++)
+    {
+
+        $("#userbody").find("#change5").eq(i).attr("onclick","delUser('"+paperArray[i].userId+"')");
+    }
+
 }
 /**
  * 删除用户

@@ -89,41 +89,22 @@
                 </button>
             </div>
             <div class="modal-body" >
-                <table class = "table table-bordered">
-                    <tr>
-                        <td>ISBN</td>
-                        <td>书名</td>
-                        <td>作者</td>
-                        <td>分类</td>
-                        <td>库存</td>
-                        <td>价格</td>
-                        <td>操作</td>
-                    </tr>
+                <table class = "table table-bordered" id="querybody">
+
+
+
+
                 </table>
-                <div id="querybody">
-                    <table class = "table table-bordered">
-                            <tr class="bookShow">
-                                <td class="id">id</td>
-                                <td class="name">name</td>
-                                <td class="auth">auth</td>
-                                <td class="type">type</td>
-                                <td class="num">num</td>
-                                <td class="price">price</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" id="change3" onclick = "delBook()">
-                                        ×
-                                    </button>
-                                    <button type='button' class='btn btn-default' id="change4" data-toggle='modal' data-target='#modiModal' onclick=''>
-                                        <span class='glyphicon glyphicon-pencil'></span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+
+
             </div>
+
         </div>
+
     </div>
+
 </div>
+
 <div class="modal fade" id="timeModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -150,28 +131,9 @@
                     &times;
                 </button>
             </div>
-            <div class="modal-body" id="userbody">
-                <table class = "table table-bordered">
-                    <tr>
-                        <td>ID</td>
-                        <td>用户名</td>
-                        <td>密码</td>
-                        <td>邮箱</td>
-                        <td>操作</td>
-                    </tr>
-                    <div >
-                        <tr class="userShow">
-                            <td class="id"></td>
-                            <td class="name"></td>
-                            <td class="password"></td>
-                            <td class="email"></td>
-                            <td>
-                                <button type="button" class="btn btn-primary" id="change5" onclick = "delUser()">
-                                    ×
-                                </button>
-                            </td>
-                        </tr>
-                    </div>
+            <div class="modal-body">
+                <table class = "table table-bordered" id="userbody">
+                    
                 </table>
             </div>
         </div>

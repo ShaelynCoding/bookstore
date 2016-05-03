@@ -9,11 +9,32 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>simple web resource</web-resource-name>
+            <web-resource-name>Manage</web-resource-name>
             <url-pattern>/manage.jsp</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Bookstore</web-resource-name>
+            <url-pattern>/bookstore.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+            <role-name>guest</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Chat</web-resource-name>
+            <url-pattern>/chatRoom.html</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
         </auth-constraint>
     </security-constraint>
 

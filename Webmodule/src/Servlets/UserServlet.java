@@ -66,9 +66,9 @@ public class UserServlet extends HttpServlet{
             }
             request.getSession().setAttribute("user", name+"@"+role);
             writer.print(name+"@"+role);
-            if(role.equals("admin"))
-                response.sendRedirect("manage.jsp");
-            else response.sendRedirect("bookstore.jsp");
+//            if(role.equals("admin"))
+//                response.sendRedirect("manage.jsp");
+//            else response.sendRedirect("bookstore.jsp");
         }
         else if(op.equals("register"))
         {

@@ -18,6 +18,8 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Queue;
 
+import static constant.ConstantInterface.guestTypes;
+
 
 /**
  * Created by lyn on 16-3-30.
@@ -32,7 +34,11 @@ public class BookServlet extends HttpServlet {
         String op=request.getParameter("operation");
         PrintWriter writer=response.getWriter();
         if(op.equals("showBooks")){
-            String out=baction.getBookInfo();
+            String out="";
+            String role=request.getParameter("role");
+            if(role.equals("guest"))
+                out=baction.getBookByGuest(guestTypes);
+            else out=baction.getBookInfo();
 
             System.out.println(out);
             writer.print(out);

@@ -105,6 +105,17 @@ public class userDAO{
         query.executeUpdate();
 
     }
+    public static List<User> queryUser(String name)
+    {
+        String hql="";
+        if(name.equals(""))
+            hql="select u from user as u";
+        else
+            hql="select u from user u where u.userName like '%"+name+"%'";
+        Query query=entityManager.createQuery(hql);
+        List<User> res=query.getResultList();
+        return res;
+    }
 }
 
 

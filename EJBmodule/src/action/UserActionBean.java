@@ -3,6 +3,7 @@ package action;
 
 import Dao.userDAO;
 import entity.User;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
@@ -10,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.sql.SQLException;
+import java.util.List;
 
 
 /**
@@ -62,9 +64,9 @@ public class UserActionBean implements UserAction {
     public String queryUser(String name)
     {
         userDAO.setEntity(entityManager);
-        User user=userDAO.getUserByName(name);
+        List<User> users=userDAO.queryUser(name);
         JsonConfig exclude=new JsonConfig();
-        String out= JSONObject.fromObject(user,exclude).toString();
+        String out= JSONArray.fromObject(users,exclude).toString();
         return out;
     }
     public void delUser(Integer id)

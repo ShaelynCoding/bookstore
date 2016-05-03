@@ -88,6 +88,7 @@ public class ChatEndPoint {
                 case "chat":
                 {
                     JSONObject reply= new JSONObject();
+                    user = (String) object.get("username");
                     reply.put("action","chat");
                     reply.put("user",user);
                     reply.put("text",(String)object.get("value"));

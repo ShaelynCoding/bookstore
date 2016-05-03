@@ -100,7 +100,7 @@
         </div>
         <div class="login-content ">
             <div class="form">
-                <form>
+
                     <div class="form-group">
                         <div class="col-xs-12  ">
                             <div class="input-group">
@@ -136,7 +136,7 @@
                             </p>
                         </div>
                     </div>
-                </form>
+
             </div>
         </div>
     </div>

@@ -66,6 +66,7 @@ function chat() {
 	sendMsg(
 		{
 			action:"chat",
+			username:getUserName(),
 			value:text
 		}
 	);
