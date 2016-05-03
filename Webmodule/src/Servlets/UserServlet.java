@@ -3,8 +3,6 @@ package Servlets;
 
 import action.UserAction;
 
-
-
 import javax.ejb.EJB;
 
 import javax.servlet.ServletException;
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.Principal;
 
 /**
  * Created by lyn on 16-3-30.
@@ -25,24 +24,12 @@ public class UserServlet extends HttpServlet{
     private UserAction userAction;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("doPost starting ");
-        String name = request.getParameter("username");
-        String password = request.getParameter("password");
-        System.out.print("name: ");
-        System.out.println(name);
-        System.out.print("password: ");
-        System.out.println(password);
-        try {
-            request.getSession(true);
+        String op=request.getParameter("operation");
+        if(op.equals("logout"))
+        {
             request.logout();
-            request.login(name, password);
-            request.getSession().setAttribute("username", name);
-            System.out.println(request.getUserPrincipal());
-            response.sendRedirect("bookstore.jsp");
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            response.getWriter().println("fail...");
         }
+
     }
 
 
@@ -51,7 +38,21 @@ public class UserServlet extends HttpServlet{
         System.out.println("get");
         String op=request.getParameter("operation");
         PrintWriter writer=response.getWriter();
-        if(op.equals("register"))
+        if(op.equals("login"))
+        {
+            String name=request.getParameter("userName");
+            String password=request.getParameter("userPwd");
+            request.getSession(true);
+            request.logout();
+            request.login(name, password);
+            Principal role=request.getUserPrincipal();
+            request.getSession().setAttribute("user",role);
+            writer.print(role.toString());
+
+//          writer.print("kkkk");
+
+        }
+        else if(op.equals("register"))
         {
             String name=request.getParameter("regName");
             String password=request.getParameter("regPwd");
@@ -80,6 +81,8 @@ public class UserServlet extends HttpServlet{
             Integer userid=Integer.parseInt(request.getParameter("userId"));
             userAction.delUser(userid);
         }
+        writer.flush();
+        writer.close();
 
     }
 }

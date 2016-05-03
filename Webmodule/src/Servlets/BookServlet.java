@@ -54,6 +54,8 @@ public class BookServlet extends HttpServlet {
             writer.print(out);
 
         }
+        writer.flush();
+        writer.close();
 
 
     }
@@ -82,6 +84,7 @@ public class BookServlet extends HttpServlet {
             String type=request.getParameter("type");
             baction.modiBook(id,price,num,type);
         }
+
 
     }
 

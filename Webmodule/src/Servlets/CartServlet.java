@@ -73,7 +73,10 @@ public class CartServlet extends HttpServlet {
             Integer num=Integer.parseInt(request.getParameter("buyNum"));
             cart.addBook(bookid,num);
 
-            }
+
+        }
+        writer.flush();
+        writer.close();
 
     }
 
@@ -94,5 +97,7 @@ public class CartServlet extends HttpServlet {
                 writer.print("success!");
             else writer.print("fail :(");
         }
+        writer.flush();
+        writer.close();
     }
 }

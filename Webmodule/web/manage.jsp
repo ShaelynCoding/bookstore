@@ -18,6 +18,8 @@
     <script src="UI/date/bootstrap-datepicker.js"></script>
     <script src="logic/common.js"></script>
     <script src="logic/manage.js"></script>
+    <script src="logic/user.js"></script>
+
 </head>
 <body>
 
@@ -212,7 +214,7 @@
             <li><a href="#cc" tabindex="-1" data-toggle="tab">By Category</a></li>
         </ul>
     </li>
-    <li class="nav navbar-nav navbar-right"><a href='logining.jsp'  onclick="logout()"><span class = "glyphicon glyphicon-user"></span>logout</a></li>
+    <li class="nav navbar-nav navbar-right"><a onclick="logout()"><span class = "glyphicon glyphicon-user"></span>logout</a></li>
 </ul>
 
 <div id="myTabContent" class="tab-content">

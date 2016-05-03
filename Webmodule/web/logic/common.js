@@ -50,17 +50,6 @@ function ajax(url, type, data, goodCallBack, errorCallBack, isAsync)
 }
 
 
-function isExist(array, item)
-{
-    for (var i = 0; i < array.length; i++)
-    {
-        if (array[i] == item)
-            return true;
-    }
-    return false;
-
-}
-
 
 //设置cookie
 //eg setCookie("name","hayden","s20","/"); key,value,存活时间,存储路径

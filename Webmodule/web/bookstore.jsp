@@ -25,7 +25,8 @@
         <ul class="nav navbar-nav navbar-right" >
             <li class="active" data-toggle="modal"   data-target="#cartModal"><a onclick="shopCart()"><span class="glyphicon glyphicon-shopping-cart"></span>shop cart</a></li>
             <li class="active" data-toggle="modal"   data-target="#dataModal"><a onclick="showdata()"><span class = "glyphicon glyphicon-list" ></span>shop record</a></li>
-            <li class="active"><a href='jj.jsp' onclick="logout()"><span class = "glyphicon glyphicon-user"></span>logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+            <li class="active"><a href="chatRoom.html"><span class="glyphicon glyphicon-comment">Chat Room</span></a></li>
+            <li class="active"><a onclick="logout()"><span class = "glyphicon glyphicon-user"></span>logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 
         </ul>
 
@@ -165,6 +166,7 @@
 <script src="UI/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="logic/common.js"></script>
 <script src="logic/book.js"></script>
+<script src="logic/user.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {

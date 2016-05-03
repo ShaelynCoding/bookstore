@@ -100,7 +100,7 @@
         </div>
         <div class="login-content ">
             <div class="form">
-                <form action="useraction" method="post">
+                <form>
                     <div class="form-group">
                         <div class="col-xs-12  ">
                             <div class="input-group">
@@ -119,7 +119,9 @@
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-4 col-xs-offset-4 ">
-                            <button type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span> µÇÂ¼</button>
+                            <button type="submit" class="btn btn-sm btn-info" onclick="login()">
+                                <span class="glyphicon glyphicon-off"></span> µÇÂ¼
+                            </button>
                         </div>
                     </div>
                     <div class="form-group">
@@ -194,31 +196,5 @@
 <script src="UI/bootstrap/dist/css/bootstrap-theme.min.css"></script>
 <script src="UI/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="logic/common.js"></script>
-<script>
-    function register() {
-        ajax("useraction","get",{
-            operation:"register",
-            regName:$("#regname").val(),
-            regPwd:$("#regpwd").val(),
-            regEmail:$("#regemail").val()
-        },function (data) {
-            alert(data);
-            $("#regModal").modal("hide");
-
-        });
-
-    }
-    function modiPwd() {
-        ajax("useraction","get",{
-            operation:"modiPwd",
-            modiName:$("#modiname").val(),
-            oldPwd:$("#oldpwd").val(),
-            newPwd:$("#newpwd").val()
-        },function (data) {
-            alert(data);
-            $("#modiModal").modal("hide");
-        })
-
-    }
-</script>
+<script src="logic/user.js"></script>
 </html>
