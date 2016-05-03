@@ -4,7 +4,8 @@ package security;
  * Created by lyn on 16-3-30.
  */
 
-import action.Login;
+
+import action.UserAction;
 
 import javax.naming.InitialContext;
 import javax.security.auth.Subject;
@@ -124,7 +125,7 @@ public class BSLoginModule implements LoginModule
 
 
             //经过测试,在idea里内部module交互用java:module,在外面
-            Login login= (Login) new InitialContext().lookup("java:module/LoginEJB!action.Login");
+            UserAction login= (UserAction) new InitialContext().lookup("java:module/UserActionEJB!action.UserAction");
             //Hello hello = (Hello) context.lookup("HelloEJB/local");
 
 

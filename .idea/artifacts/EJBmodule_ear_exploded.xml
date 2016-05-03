@@ -8,6 +8,7 @@
       </element>
       <element id="directory" name="lib">
         <element id="library" level="project" name="JPA 2.0-2.0" />
+        <element id="library" level="project" name="lib" />
       </element>
     </root>
   </artifact>

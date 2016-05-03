@@ -2,9 +2,12 @@ package Servlets;
 
 import Dao.userDAO;
 import action.Cart;
-
+import javax.jms.*;
+import javax.naming.InitialContext;
 import javax.ejb.EJB;
+import javax.ejb.Init;
 import javax.jws.WebService;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
+
 /**
  * Created by lyn on 16-3-30.
  */
@@ -21,7 +25,29 @@ import java.util.HashMap;
 public class CartServlet extends HttpServlet {
     @EJB(name = "Cart")
     private Cart cart;
+    private void sendBuyMsg(String userName)
+    {
+        try {
+            InitialContext context=new InitialContext();
+            QueueConnectionFactory factory=(QueueConnectionFactory)context.lookup("ConnectionFactory");
+            QueueConnection connection = factory.createQueueConnection();
+            QueueSession session = connection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+            Queue queue=(Queue)context.lookup("queue/myQueue");
+            String cartMsg=cart.getCart();
+            TextMessage msg=session.createTextMessage(userName+"@"+cartMsg);
+            QueueSender sender=session.createSender(queue);
+            sender.send(msg);
+            session.close();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
+
+
+
+
+    }
     protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         String op=request.getParameter("operation");
         PrintWriter writer=response.getWriter();
@@ -34,11 +60,20 @@ public class CartServlet extends HttpServlet {
         else if(op.equals("buybook"))
         {
             String name=(String)request.getSession().getAttribute("username");
-            Integer id=userDAO.getId(name);
-            if(cart.buy(id))
-                writer.print("购买成功");
-            else writer.print("库存不足，购买失败");
+            sendBuyMsg(name);
+            cart.clear();
+//            Integer id=userDAO.getId(name);
+//            if(cart.buy(id))
+//                writer.print("success");
+//            else writer.print("fail");
         }
+        else if(op.equals("addCart"))
+        {
+            String bookid=request.getParameter("bookISBN");
+            Integer num=Integer.parseInt(request.getParameter("buyNum"));
+            cart.addBook(bookid,num);
+
+            }
 
     }
 
@@ -51,14 +86,7 @@ public class CartServlet extends HttpServlet {
             writer.print(res);
 
         }
-        else if(op.equals("addCart"))
-        {
-            String bookid=request.getParameter("bookISBN");
-            Integer num=Integer.parseInt(request.getParameter("buyNum"));
-            if(cart.addBook(bookid,num))
-                writer.print("success :)");
-            else writer.print("fail :(");
-        }
+
         else if(op.equals("delCart"))
         {
             String bookid=request.getParameter("bookid");

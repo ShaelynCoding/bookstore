@@ -8,10 +8,12 @@ import java.util.HashMap;
  */
 @Remote
 public interface Cart {
+
     void initialize();
     boolean addBook(String bIsbn,Integer num);
     boolean removeBook(String bIsbn);
     void clear();
     boolean buy(Integer id);
+    boolean buyByMsg(String name,String cartStr);
     String getCart();
 }

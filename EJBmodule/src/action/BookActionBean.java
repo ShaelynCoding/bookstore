@@ -43,6 +43,29 @@ public class BookActionBean implements BookAction{
         out= JSONObject.fromObject(b,exclude).toString();
         return out;
     }
+    public void addBook(String id,String name,String auth,String type,Integer num,Double price)
+    {
+        bookDAO.setEntity(entityManager);
+        bookDAO.addBook(id,name,auth,type,num,price);
+    }
+    public String queryBook(String bookid,String name)
+    {
+        bookDAO.setEntity(entityManager);
+        List<Book>books = bookDAO.queryBook(bookid,name);
+        JsonConfig exclude=new JsonConfig();
+        String out= JSONArray.fromObject(books,exclude).toString();
+        return out;
 
+    }
+    public void delBook(String id)
+    {
+        bookDAO.setEntity(entityManager);
+        bookDAO.deleteBook(id);
+    }
+    public void modiBook(String id,Double price,Integer num,String type)
+    {
+        bookDAO.setEntity(entityManager);
+        bookDAO.modiBook(id,price,num,type);
+    }
 
 }

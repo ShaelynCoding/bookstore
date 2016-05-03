@@ -2,21 +2,31 @@ package action;
 
 import Dao.InfoDAO;
 import Dao.bookDAO;
+import Dao.userDAO;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import javax.annotation.Resource;
 import javax.ejb.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.*;
 
 /**
  * Created by lyn on 16-3-30.
  */
-
+@TransactionManagement(TransactionManagementType.CONTAINER)
 @Stateful(name = "CartEJB")
 public class CartBean implements Cart {
+    @PersistenceContext(unitName = "JPADB")
+    private EntityManager entityManager;
 
-    private HashMap<String,Integer> contents;
+    private static HashMap<String,Integer> contents=new HashMap<>();
+
+    @Resource
+    private SessionContext context;
+
     public CartBean() {
 
     }
@@ -28,7 +38,7 @@ public class CartBean implements Cart {
 
     public boolean addBook(String bIsbn,Integer num){
         Integer remain=bookDAO.getByISBN(bIsbn).getBookNum();
-        if(contents==null) initialize();
+
 
         if(num<=remain) {
             contents.put(bIsbn, num);
@@ -39,7 +49,7 @@ public class CartBean implements Cart {
 
     public boolean removeBook(String bIsbn){
 
-        if(contents==null) initialize();
+
         if(contents.containsKey(bIsbn))
         {
             contents.remove(bIsbn);
@@ -53,7 +63,7 @@ public class CartBean implements Cart {
 
     public String getCart()
     {
-        if(contents==null) initialize();
+
         Map map=new HashMap<String,Object>() ;
         JSONArray jsonArr = new JSONArray();
         Iterator iter = contents.entrySet().iterator();
@@ -74,22 +84,55 @@ public class CartBean implements Cart {
     @Override
     public boolean buy(Integer customerId)
     {
-        Iterator iter = contents.entrySet().iterator();
-
-        while(iter.hasNext())
+        bookDAO.setEntity(entityManager);
+        InfoDAO.setEntityManager(entityManager);
+        try
         {
-            HashMap.Entry entry=(HashMap.Entry)iter.next();
-            String ISBN=(String)entry.getKey();
-            Integer num=(Integer)entry.getValue();
+            Iterator iter = contents.entrySet().iterator();
+            while(iter.hasNext())
+            {
+                HashMap.Entry entry=(HashMap.Entry)iter.next();
+                String ISBN=(String)entry.getKey();
+                Integer num=(Integer)entry.getValue();
+                Integer oldNum=bookDAO.getRemain(ISBN);
+                if(oldNum>=num) {
+                    if(!bookDAO.modiRemain(ISBN, oldNum - num) || !InfoDAO.addInfo(customerId, ISBN, num))
+                        throw new Exception("bad deal");
+
+                }
+                else  return false;
+            }
+            contents.clear();
+            return true;
+        }catch (Exception e)
+        {
+            context.setRollbackOnly();
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+    public boolean buyByMsg(String name, String cartStr)
+    {
+        System.out.println("cart: "+cartStr);
+        bookDAO.setEntity(entityManager);
+        userDAO.setEntity(entityManager);
+        InfoDAO.setEntityManager(entityManager);
+        Integer id=userDAO.getId(name);
+        JSONArray jsonArr=JSONArray.fromObject(cartStr);
+        for(int i=0;i<jsonArr.size();i++)
+        {
+            String ISBN=jsonArr.getJSONObject(i).getString("bookISBN");
+            Integer num=jsonArr.getJSONObject(i).getInt("buyNum");
             Integer oldNum=bookDAO.getRemain(ISBN);
             if(oldNum>=num) {
                 bookDAO.modiRemain(ISBN, oldNum - num);
-                InfoDAO.addInfo(customerId, ISBN, num);
-
+                InfoDAO.addInfo(id, ISBN, num);
             }
             else  return false;
+
         }
-        contents.clear();
+        //clear();
         return true;
 
     }

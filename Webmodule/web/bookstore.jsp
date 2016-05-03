@@ -25,7 +25,7 @@
         <ul class="nav navbar-nav navbar-right" >
             <li class="active" data-toggle="modal"   data-target="#cartModal"><a onclick="shopCart()"><span class="glyphicon glyphicon-shopping-cart"></span>shop cart</a></li>
             <li class="active" data-toggle="modal"   data-target="#dataModal"><a onclick="showdata()"><span class = "glyphicon glyphicon-list" ></span>shop record</a></li>
-            <li class="active"><a href='index.jsp'  onclick="logout()"><span class = "glyphicon glyphicon-user"></span>logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+            <li class="active"><a href='jj.jsp' onclick="logout()"><span class = "glyphicon glyphicon-user"></span>logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 
         </ul>
 
@@ -45,12 +45,13 @@
                     <button type="button" class="btn btn-default btn-sm" onclick="" id="change">
                         &nbsp;&nbsp;&nbsp;&nbsp;查看详情 &nbsp;&nbsp;&nbsp;&nbsp;
                     </button>
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
-                <div  class="input-group">
-                    <input type="text" id="initNum" class="col-xs-4">
-                    <button type="button" onclick="addCart()" id="change2">+</button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
+                <%--<div  class="input-group">--%>
+                    <%--<input type="text" id="initNum" class="col-xs-4">--%>
+                    <%--<button type="button" onclick="addCart()" id="change2">+</button>--%>
+                    <%--&nbsp;&nbsp;&nbsp;&nbsp;--%>
+                <%--</div>--%>
             </ul>
         </nav>
     </div>
@@ -148,6 +149,11 @@
                 <p class="price"></p>
                 <p class="type"></p>
                 <p class="remain"></p>
+                <div  class="input-group">
+                    <input type="text" id="buyNum" class="col-xs-4">
+                    <button type="button" onclick="addCart()" id="change2">+</button>
+
+                </div>
             </div>
         </div>
     </div>
@@ -157,8 +163,8 @@
 <script src="UI/js/jquery-2.1.4.js"></script>
 <script src="UI/bootstrap/dist/css/bootstrap-theme.min.css"></script>
 <script src="UI/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="UI/js/mycommon.js"></script>
-<script src="UI/js/book.js"></script>
+<script src="logic/common.js"></script>
+<script src="logic/book.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -168,7 +174,7 @@
         },function (jsonStr) {
             var jsonArr=JSON.parse(jsonStr);
             displayBooks(jsonArr);
-            cartInit();
+            //cartInit();
         });
 
 

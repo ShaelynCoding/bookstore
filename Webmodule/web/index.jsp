@@ -1,189 +1,224 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: lyn
-  Date: 16-3-29
-  Time: 涓婂崍10:56
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=gb2312" language="java" %>
 <html>
-  <head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
     <title>Bookstore</title>
-    <STYLE>
-      body{
-        background: #ebebeb;
-        font-family: "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","\9ED1\4F53",Arial,sans-serif;
-        color: #222;
-        font-size: 12px;
-      }
-      *{padding: 0px;margin: 0px;}
-      .top_div{
-        background: #008ead;
-        width: 100%;
-        height: 400px;
-      }
-      .ipt{
-        border: 1px solid #d3d3d3;
-        padding: 10px 10px;
-        width: 290px;
-        border-radius: 4px;
-        padding-left: 35px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
-      }
-      .ipt:focus{
-        border-color: #66afe9;
-        outline: 0;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
-      }
-      .u_logo{
-        background: url("UI/images/username.png") no-repeat;
-        padding: 10px 10px;
-        position: absolute;
-        top: 43px;
-        left: 40px;
+    <link href="UI/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        html,body {
+            height: 100%;
+        }
+        .box {
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6699FF', endColorstr='#6699FF'); /*  IE */
+            background-image:linear-gradient(bottom, #6699FF 0%, #6699FF 100%);
+            background-image:-o-linear-gradient(bottom, #6699FF 0%, #6699FF 100%);
+            background-image:-moz-linear-gradient(bottom, #6699FF 0%, #6699FF 100%);
+            background-image:-webkit-linear-gradient(bottom, #6699FF 0%, #6699FF 100%);
+            background-image:-ms-linear-gradient(bottom, #6699FF 0%, #6699FF 100%);
 
-      }
-      .p_logo{
-        background: url("UI/images/password.png") no-repeat;
-        padding: 10px 10px;
-        position: absolute;
-        top: 12px;
-        left: 40px;
-      }
-      a{
-        text-decoration: none;
-      }
-      .tou{
-        background: url("UI/images/tou.png") no-repeat;
-        width: 97px;
-        height: 92px;
-        position: absolute;
-        top: -87px;
-        left: 140px;
-      }
-      .left_hand{
-        background: url("UI/images/left_hand.png") no-repeat;
-        width: 32px;
-        height: 37px;
-        position: absolute;
-        top: -38px;
-        left: 150px;
-      }
-      .right_hand{
-        background: url("UI/images/right_hand.png") no-repeat;
-        width: 32px;
-        height: 37px;
-        position: absolute;
-        top: -38px;
-        right: -64px;
-      }
-      .initial_left_hand{
-        background: url("UI/images/hand.png") no-repeat;
-        width: 30px;
-        height: 20px;
-        position: absolute;
-        top: -12px;
-        left: 100px;
-      }
-      .initial_right_hand{
-        background: url("UI/images/hand.png") no-repeat;
-        width: 30px;
-        height: 20px;
-        position: absolute;
-        top: -12px;
-        right: -112px;
-      }
-      .left_handing{
-        background: url("UI/images/left-handing.png") no-repeat;
-        width: 30px;
-        height: 20px;
-        position: absolute;
-        top: -24px;
-        left: 139px;
-      }
-      .right_handinging{
-        background: url("UI/images/right_handing.png") no-repeat;
-        width: 30px;
-        height: 20px;
-        position: absolute;
-        top: -21px;
-        left: 210px;
-      }
+            margin: 0 auto;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .login-box {
+            width: 100%;
+            max-width:500px;
+            height: 400px;
+            position: absolute;
+            top: 50%;
 
-    </STYLE>
-  </head>
+            margin-top: -200px;
+            /*设置负值，为要定位子盒子的一半高度*/
+
+        }
+        @media screen and (min-width:500px){
+            .login-box {
+                left: 50%;
+                /*设置负值，为要定位子盒子的一半宽度*/
+                margin-left: -250px;
+            }
+        }
+
+        .form {
+            width: 100%;
+            max-width:500px;
+            height: 275px;
+            margin: 25px auto 0px auto;
+            padding-top: 25px;
+        }
+        .login-content {
+            height: 300px;
+            width: 100%;
+            max-width:500px;
+            background-color: rgba(255, 250, 2550, .6);
+            float: left;
+        }
 
 
-  <body>
-<form method="post" action="Login" id="form1">
-  <div class="top_div"></div>
-      <div style="background: rgb(255, 255, 255); margin: -100px auto auto; border: 1px solid rgb(231, 231, 231); border-image: none; width: 400px; height: 200px; text-align: center;">
-      <div style="width: 165px; height: 96px; position: absolute;">
-        <div class="tou"></div>
-        <div class="initial_left_hand" id="left_hand"></div>
-        <div class="initial_right_hand" id="right_hand"></div>
-      </div>
-      <p style="padding: 30px 0px 10px; position: relative;">
-        <span class="u_logo"></span>
-        <input class="ipt" type="text" name=userName placeholder="user name" value="" id="username">
-      </p>
-      <p style="position: relative;">
-        <span class="p_logo"></span>
-        <input class="ipt"  type="password" name=userPwd placeholder="password" value="" id="userpwd">
-      </p>
-      <div style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
-        <p style="margin: 0px 35px 20px 45px;">
-          <span style="float: left;">
-            <a style="color: rgb(204, 204, 204);"href="pwdmodi.jsp">
-              forget password?
-            </a>
-          </span>
-          <span style="float: right;">
-           <a  class="active" data-toggle="modal"   data-target="#regModal" style="color: rgb(204, 204, 204); margin-right: 10px;"href="register.jsp">
-              register
-            </a>
-            <input type="submit" name="submit" class="submit action-button" value="load" />
-          </span>
-        </p>
-      </div>
+        .input-group {
+            margin: 0px 0px 30px 0px !important;
+        }
+        .form-control,
+        .input-group {
+            height: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 0px !important;
+        }
+        .login-title {
+            padding: 20px 10px;
+            background-color: rgba(0, 0, 0, .6);
+        }
+        .login-title h1 {
+            margin-top: 10px !important;
+        }
+        .login-title small {
+            color: #fff;
+        }
+
+        .link p {
+            line-height: 20px;
+            margin-top: 30px;
+        }
+        .btn-sm {
+            padding: 8px 24px !important;
+            font-size: 16px !important;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<div class="box">
+    <div class="login-box">
+        <div class="login-title text-center">
+            <h1><small>登录</small></h1>
+        </div>
+        <div class="login-content ">
+            <div class="form">
+                <form action="useraction" method="post">
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                <input type="text" id="username" name="username" class="form-control" placeholder="用户名">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                <input type="text" id="password" name="password" class="form-control" placeholder="密码">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-xs-4 col-xs-offset-4 ">
+                            <button type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span> 登录</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6 link">
+                            <p class="text-center remove-margin" data-toggle="modal"   data-target="#modiModal" >
+                                <small>修改密码</small>
+                            </p>
+                        </div>
+                        <div class="col-xs-6 link">
+                            <p class="text-center remove-margin" data-toggle="modal"   data-target="#regModal">
+                                <small>注册</small>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-</form>
+</div>
 <div class="modal fade" id="regModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close"
-                data-dismiss="modal" aria-hidden="true">
-          &times;
-        </button>
-      </div>
-      <div class="modal-body" id="databody">
-        User name<input type="text" id="regname"/>
-        Password<input type="password" id="regpwd"/>
-        Email<input type="text" id="regemail"/>
-        <button onclick="re"></button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default"
-                data-dismiss="modal">Close
-        </button>
-        <button type="button" class="btn btn-primary" id="sub" onclick = "showRegister()">
-          Submit
-        </button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                用户注册
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body" >
+                <ul>用户名<input type="text" id="regname"/></ul>
+                <ul>密码 <input type="password" id="regpwd"/></ul>
+                <ul>邮件 <input type="text" id="regemail"/></ul>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick = "register()">
+                    Submit
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+<div class="modal fade" id="modiModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                密码修改
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body" >
+                <ul>用户名<input type="text" id="modiname"/></ul>
+                <ul>原密码<input type="password" id="oldpwd"/></ul>
+                <ul>新密码<input type="password" id="newpwd"/></ul>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick = "modiPwd()">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script src="UI/js/jquery-2.1.4.js"></script>
 <script src="UI/bootstrap/dist/css/bootstrap-theme.min.css"></script>
 <script src="UI/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="UI/js/mycommon.js"></script>
-<script src="UI/js/book.js"></script>
+<script src="logic/common.js"></script>
+<script>
+    function register() {
+        ajax("useraction","get",{
+            operation:"register",
+            regName:$("#regname").val(),
+            regPwd:$("#regpwd").val(),
+            regEmail:$("#regemail").val()
+        },function (data) {
+            alert(data);
+            $("#regModal").modal("hide");
+
+        });
+
+    }
+    function modiPwd() {
+        ajax("useraction","get",{
+            operation:"modiPwd",
+            modiName:$("#modiname").val(),
+            oldPwd:$("#oldpwd").val(),
+            newPwd:$("#newpwd").val()
+        },function (data) {
+            alert(data);
+            $("#modiModal").modal("hide");
+        })
+
+    }
+</script>
 </html>

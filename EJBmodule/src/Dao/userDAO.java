@@ -48,30 +48,32 @@ public class userDAO{
 
         return 1;
     }
-    public static void modiPwd(String name,String oldPwd,String newPwd)
+    public static boolean modiPwd(String name,String oldPwd,String newPwd)
     {
         String sql="select userPwd from user where userName='"+name+"'";
         Query query=entityManager.createNativeQuery(sql);
         List<String> password=query.getResultList();
         if(!password.isEmpty())
         {
-            if(password.equals(oldPwd))
+            if(oldPwd.equals(password.get(0)))
             {
                 sql="update user set userPwd=? where userName=?";
                 query=entityManager.createNativeQuery(sql);
                 query.setParameter(1,newPwd);
                 query.setParameter(2,name);
                 query.executeUpdate();
+                return true;
 
             }
         }
+        return false;
     }
 
     public static boolean addUser(String name,String pwd,String email)
     {
-        String sql="select u from user as u where u.userName='"+name+"'";
-        Query query=entityManager.createQuery(sql);
-        List<User> res=query.getResultList();
+        String sql="select userId from user where userName='"+name+"'";
+        Query query=entityManager.createNativeQuery(sql);
+        List<Integer> res=query.getResultList();
         if(!res.isEmpty())
             return false;
         else
@@ -84,6 +86,24 @@ public class userDAO{
             query.executeUpdate();
             return true;
         }
+    }
+    public static User getUserByName(String name)
+    {
+        String sql="select u from user as u where u.userName='"+name+"'";
+        Query query=entityManager.createQuery(sql);
+        List<User> res=query.getResultList();
+        if(!res.isEmpty())
+        {
+            return res.get(0);
+        }
+        return null;
+    }
+    public static void delUser(Integer id)
+    {
+        String sql="delete from user where userId='"+id.toString()+"'";
+        Query query=entityManager.createNativeQuery(sql);
+        query.executeUpdate();
+
     }
 }
 

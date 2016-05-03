@@ -16,63 +16,60 @@
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="6" parent="2" name="userName">
-        <data-type>varchar(255)</data-type>
+      <column id="6" parent="2" name="userId">
+        <data-type>int(11)</data-type>
       </column>
       <column id="7" parent="2" name="bookISDN">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="8" parent="2" name="bookType">
-        <data-type>varchar(255)</data-type>
-      </column>
-      <column id="9" parent="2" name="buyNum">
+      <column id="8" parent="2" name="buyNum">
         <data-type>int(11)</data-type>
       </column>
-      <column id="10" parent="2" name="time">
+      <column id="9" parent="2" name="time">
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="11" parent="2" name="PRIMARY">
+      <key id="10" parent="2" name="PRIMARY">
         <columns>infoId</columns>
         <primary>1</primary>
       </key>
-      <column id="12" parent="3" name="bookISDN">
+      <column id="11" parent="3" name="bookISDN">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="13" parent="3" name="bookAuth">
+      <column id="12" parent="3" name="bookAuth">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="14" parent="3" name="bookName">
+      <column id="13" parent="3" name="bookName">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="15" parent="3" name="bookPrice">
+      <column id="14" parent="3" name="bookPrice">
         <data-type>double</data-type>
       </column>
-      <column id="16" parent="3" name="bookNum">
+      <column id="15" parent="3" name="bookNum">
         <data-type>int(11)</data-type>
       </column>
-      <column id="17" parent="3" name="bookType">
+      <column id="16" parent="3" name="bookType">
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="18" parent="3" name="PRIMARY">
+      <key id="17" parent="3" name="PRIMARY">
         <columns>bookISDN</columns>
         <primary>1</primary>
       </key>
-      <column id="19" parent="4" name="userId">
+      <column id="18" parent="4" name="userId">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="20" parent="4" name="userName">
+      <column id="19" parent="4" name="userName">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="21" parent="4" name="userPwd">
+      <column id="20" parent="4" name="userPwd">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="22" parent="4" name="userEmail">
+      <column id="21" parent="4" name="userEmail">
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="23" parent="4" name="PRIMARY">
+      <key id="22" parent="4" name="PRIMARY">
         <columns>userId</columns>
         <primary>1</primary>
       </key>

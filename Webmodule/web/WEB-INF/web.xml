@@ -6,7 +6,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>simple web resource</web-resource-name>
-            <url-pattern>/Login</url-pattern>
+            <url-pattern>/userAction</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
@@ -21,7 +21,7 @@
 
     <security-role>
         <description>Authorized to limited access.</description>
-        <role-name>User</role-name>
+        <role-name>user</role-name>
     </security-role>
 </web-app>
 
