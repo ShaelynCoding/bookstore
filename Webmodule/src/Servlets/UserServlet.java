@@ -22,35 +22,55 @@ import java.security.Principal;
 public class UserServlet extends HttpServlet{
     @EJB(name="UserAction")
     private UserAction userAction;
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("doPost starting ");
-        String name=request.getParameter("username");
-        String password=request.getParameter("password");
-        request.getSession(true);
-        request.logout();
-        request.login(name, password);
-        String role="guest";
-        if(request.isUserInRole("admin")) {
-            role="admin";
-        }
-        else if(request.isUserInRole("user"))
-        {
-            role="user";
-        }
-        request.getSession().setAttribute("user", name+"@"+role);
-        if(role.equals("admin"))
-            response.sendRedirect("manage.jsp");
-        else response.sendRedirect("bookstore.jsp");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+//        String name=request.getParameter("username");
+//        String password=request.getParameter("password");
+//        request.getSession(true);
+//        request.logout();
+//        request.login(name, password);
+//        String role="guest";
+//        if(request.isUserInRole("admin")) {
+//            role="admin";
+//        }
+//        else if(request.isUserInRole("user"))
+//        {
+//            role="user";
+//        }
+//        request.getSession().setAttribute("user", name+"@"+role);
+//        if(role.equals("admin"))
+//            response.sendRedirect("manage.jsp");
+//        else response.sendRedirect("bookstore.jsp");
     }
 
 
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("get");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String op=request.getParameter("operation");
         PrintWriter writer=response.getWriter();
-
-        if(op.equals("register"))
+        if(op.equals("login"))
+        {
+            String name=request.getParameter("username");
+            String password=request.getParameter("password");
+            request.getSession(true);
+            request.logout();
+            request.login(name, password);
+            String role="guest";
+            if(request.isUserInRole("admin")) {
+                role="admin";
+            }
+            else if(request.isUserInRole("user"))
+            {
+                role="user";
+            }
+            request.getSession().setAttribute("user", name+"@"+role);
+            writer.print(name+"@"+role);
+            if(role.equals("admin"))
+                response.sendRedirect("manage.jsp");
+            else response.sendRedirect("bookstore.jsp");
+        }
+        else if(op.equals("register"))
         {
             String name=request.getParameter("regName");
             String password=request.getParameter("regPwd");
@@ -88,6 +108,10 @@ public class UserServlet extends HttpServlet{
 
                 writer.print(tmp[0]);
             }
+        }
+        else if(op.equals("cookieSet")){
+            String out=(String)request.getSession().getAttribute("user");
+            writer.println(out);
         }
         writer.flush();
         writer.close();

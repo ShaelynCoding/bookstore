@@ -1,26 +1,26 @@
 /**
  * Created by lyn on 16-5-3.
  */
+/**
+ * login
+ */
 function login()
 {
-    ajax("useraction","get",{
+    ajax("useraction","post",{
         operation:"login",
-        userName:$("#username").val(),
-        userPwd:$("#password").val()
+        username:$("#username").val(),
+        password:$("#password").val()
     },function (role) {
-        alert(role);
-        // setCookie("user",role,"d1","/");
-        //
-        // if(role.indexOf("admin"))
-        //     self.location="manage.jsp";
-        // else self.location="bookstore.jsp";
         
-    },function () {
-        alert("error");
+        setCookie("user",role,"d1","/");
+        
     });
 }
+/**
+ * 注册
+ */
 function register() {
-    ajax("useraction","get",{
+    ajax("useraction","post",{
         operation:"register",
         regName:$("#regname").val(),
         regPwd:$("#regpwd").val(),
@@ -32,8 +32,11 @@ function register() {
     });
 
 }
+/**
+ * 修改密码
+ */
 function modiPwd() {
-    ajax("useraction","get",{
+    ajax("useraction","post",{
         operation:"modiPwd",
         modiName:$("#modiname").val(),
         oldPwd:$("#oldpwd").val(),
@@ -44,22 +47,27 @@ function modiPwd() {
     })
 
 }
+/**
+ * 注销登录
+ */
 function logout() {
     setCookie("user","","s0","/");
     ajax("useraction","post",{
         operation:"logout"
     },function () {
+        
         self.location="index.jsp";
 
     })
 }
+/**
+ * 获取登录用户名
+ * @returns {*}
+ */
 function getUserName() {
-    ajax("useraction","get",{
-        operation:"getUserName"
-    },
-    function (data) {
-        return data;
-        
-    });
-    
+    var cookie=getCookie();
+    var tmpArr=new Array();
+    tmpArr=cookie.split("@");
+    return tmpArr[0];
+
 }

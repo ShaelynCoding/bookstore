@@ -1,7 +1,9 @@
-
+/**
+ * 显示购物车
+ */
 function shopCart()
 {
-    ajax("cart","get",
+    ajax("cart","post",
         {
             operation:"showCart"
         },function (jsonStr) {
@@ -10,6 +12,10 @@ function shopCart()
         });
 
 }
+/**
+ * 显示
+ * @param paperArray
+ */
 function displayCart(paperArray) {
     var papersDoc = $("#cartModal");
     var singlePaper = papersDoc.html();
@@ -31,14 +37,13 @@ function displayCart(paperArray) {
     }
 
 }
-function cartInit() {
-    ajax("cart","post",{
-        operation:"cartInit"
-    });
 
-}
+/**
+ * 从购物车删除记录
+ * @param bookid
+ */
 function delCart(bookid) {
-    ajax("cart","get",{
+    ajax("cart","post",{
         operation:"delCart",
         bookid:bookid
     },function (data) {
@@ -47,10 +52,14 @@ function delCart(bookid) {
     });
 
 }
+/**
+ * 查看某本书的细节
+ * @param bookid
+ */
 function showDetail(bookid)
 {
     alert("showDetail: "+bookid);
-    ajax("bookaction","get",{
+    ajax("bookaction","post",{
         operation:"showDetail",
         bookISBN:bookid
     },function(jsonStr){
@@ -68,6 +77,9 @@ function showDetail(bookid)
 
     });
 }
+/**
+ * 购买
+ */
 function buybook()
 {
     
@@ -77,6 +89,10 @@ function buybook()
       $("#thank").html(data);
   });
 }
+/**
+ * 添加到购物车
+ * @param bookid
+ */
 function addCart(bookid) {
 
     ajax("cart","post",{
@@ -91,7 +107,10 @@ function addCart(bookid) {
     });
 
 }
-
+/**
+ * 显示上架的书
+ * @param paperArray
+ */
 function displayBooks(paperArray) {
     //init
     var papersDoc = $("#books");

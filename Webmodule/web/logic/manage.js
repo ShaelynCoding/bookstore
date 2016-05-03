@@ -1,6 +1,9 @@
 /**
  * Created by lyn on 16-5-2.
  */
+/**
+ * 新书上架
+ */
 function addbook() {
     ajax("bookaction","post",{
         operation:"addbook",
@@ -12,9 +15,12 @@ function addbook() {
         type:$("#booktype1").val()
     });    
 }
+/**
+ * 查询书
+ */
 function querybook()
 {
-    ajax("bookaction","get",
+    ajax("bookaction","post",
         {
             operation:"querybook",
             bookISDN:$("#bid").val(),
@@ -27,6 +33,11 @@ function querybook()
             displayBook(json);
         });
 }
+
+/**
+ * 显示书
+ * @param paperArray
+ */
 function displayBook(paperArray) {
     var papersDoc = $("#querybody");
     var singlePaper = papersDoc.html();
@@ -50,6 +61,10 @@ function displayBook(paperArray) {
         
     }
 }
+/**
+ * 下架书
+ * @param bookid
+ */
 function delBook(bookid)
 {
     ajax("bookaction","post",{
@@ -64,6 +79,9 @@ function trans(bookid)
     paperHtml.find("#isbn2").html(bookid);
     
 }
+/**
+ * 修改书的信息
+ */
 function modiBook() 
 {
     ajax("modiBook","post",{
@@ -74,9 +92,12 @@ function modiBook()
     });
        
 }
+/**
+ * 查询用户
+ */
 function queryuser()
 {
-    ajax("useraction","get",{
+    ajax("useraction","post",{
         operation:"queryuser",
         userName:$("#uame").val()
     },function (jsonStr) {
@@ -106,159 +127,162 @@ function displayUser(paperArray) {
 
     }
 }
-
+/**
+ * 删除用户
+ * @param userId
+ */
 function delUser(userId)
 {
     $('#userModal').modal('hide');
-    ajax("useraction","get",
+    ajax("useraction","post",
         {
             operation:"delUser",
             id:userId
         });
 }
 
-function logout()
-{
-
-    $.post("logout",
-        {
-
-        });
-}
-function cateGUI()
-{
-    $.post("cateGUI",
-        {
-
-        },
-        function(data,status)
-        {
-
-            var strs = new Array();
-            var allType = new Array();
-            var all = new Array();
-            strs = data.split(";");
-            //alert(strs.length);
-            for (var i =0;i<strs.length-1;i++)
-            {
-                var temp = strs[i].split(",");
-                allType[i] = temp[0];
-                //alert(allType);
-                all[i] = {value:parseInt(temp[1]),name:temp[0]};
-                //alert(all);
-
-
-            }
-            var option = {
-                tooltip : {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    orient : 'vertical',
-                    x : 'left',
-                    data:allType
-                },
-                toolbox: {
-                    show : true,
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
-                        magicType : {
-                            show: true,
-                            type: ['pie', 'funnel'],
-                            option: {
-                                funnel: {
-                                    x: '25%',
-                                    width: '50%',
-                                    funnelAlign: 'center',
-                                    max: 1548
-                                }
-                            }
-                        },
-                        restore : {show: true},
-                        saveAsImage : {show: true}
-                    }
-                },
-                calculable :false,
-                series : [
-                    {
-                        name:'Book Category',
-                        type:'pie',
-                        radius : ['50%', '70%'],
-                        itemStyle : {
-                            normal : {
-                                label : {
-                                    show : false
-                                },
-                                labelLine : {
-                                    show : false
-                                }
-                            },
-                            emphasis : {
-                                label : {
-                                    show : true,
-                                    position : 'center',
-                                    textStyle : {
-                                        fontSize : '15',
-                                        fontWeight : 'bold'
-                                    }
-                                }
-                            }
-                        },
-                        data:all
-                    }
-                ]
-            };
-            var myChart = echarts.init(document.getElementById('cate'));
-            myChart.setOption(option);
-
-        });
-
-}
-
-
-function datauser()
-{
-
-    $.post("datauser",
-        {
-
-            userName:$("#udname").val()
-
-        },
-        function(data,status)
-        {
-
-            $("#udatabody").html(data);
-        });
-}
-function datacate()
-{
-    $.post("datacate",
-        {
-
-            bookType:$("#btype").val()
-
-        },
-        function(data,status)
-        {
-            $("#catebody").html(data);
-
-        });
-
-}
-
-function dataTime()
-{
-    $.post("datatime",
-        {
-            beginTime:$("#begin").val(),
-            endTime:$("#end").val()
-
-        },
-        function(data,status)
-        {
-            $("#timebody").html(data);
-        });
-}
+// function logout()
+// {
+//
+//     $.post("logout",
+//         {
+//
+//         });
+// }
+// function cateGUI()
+// {
+//     $.post("cateGUI",
+//         {
+//
+//         },
+//         function(data,status)
+//         {
+//
+//             var strs = new Array();
+//             var allType = new Array();
+//             var all = new Array();
+//             strs = data.split(";");
+//             //alert(strs.length);
+//             for (var i =0;i<strs.length-1;i++)
+//             {
+//                 var temp = strs[i].split(",");
+//                 allType[i] = temp[0];
+//                 //alert(allType);
+//                 all[i] = {value:parseInt(temp[1]),name:temp[0]};
+//                 //alert(all);
+//
+//
+//             }
+//             var option = {
+//                 tooltip : {
+//                     trigger: 'item',
+//                     formatter: "{a} <br/>{b} : {c} ({d}%)"
+//                 },
+//                 legend: {
+//                     orient : 'vertical',
+//                     x : 'left',
+//                     data:allType
+//                 },
+//                 toolbox: {
+//                     show : true,
+//                     feature : {
+//                         mark : {show: true},
+//                         dataView : {show: true, readOnly: false},
+//                         magicType : {
+//                             show: true,
+//                             type: ['pie', 'funnel'],
+//                             option: {
+//                                 funnel: {
+//                                     x: '25%',
+//                                     width: '50%',
+//                                     funnelAlign: 'center',
+//                                     max: 1548
+//                                 }
+//                             }
+//                         },
+//                         restore : {show: true},
+//                         saveAsImage : {show: true}
+//                     }
+//                 },
+//                 calculable :false,
+//                 series : [
+//                     {
+//                         name:'Book Category',
+//                         type:'pie',
+//                         radius : ['50%', '70%'],
+//                         itemStyle : {
+//                             normal : {
+//                                 label : {
+//                                     show : false
+//                                 },
+//                                 labelLine : {
+//                                     show : false
+//                                 }
+//                             },
+//                             emphasis : {
+//                                 label : {
+//                                     show : true,
+//                                     position : 'center',
+//                                     textStyle : {
+//                                         fontSize : '15',
+//                                         fontWeight : 'bold'
+//                                     }
+//                                 }
+//                             }
+//                         },
+//                         data:all
+//                     }
+//                 ]
+//             };
+//             var myChart = echarts.init(document.getElementById('cate'));
+//             myChart.setOption(option);
+//
+//         });
+//
+// }
+//
+//
+// function datauser()
+// {
+//
+//     $.post("datauser",
+//         {
+//
+//             userName:$("#udname").val()
+//
+//         },
+//         function(data,status)
+//         {
+//
+//             $("#udatabody").html(data);
+//         });
+// }
+// function datacate()
+// {
+//     $.post("datacate",
+//         {
+//
+//             bookType:$("#btype").val()
+//
+//         },
+//         function(data,status)
+//         {
+//             $("#catebody").html(data);
+//
+//         });
+//
+// }
+//
+// function dataTime()
+// {
+//     $.post("datatime",
+//         {
+//             beginTime:$("#begin").val(),
+//             endTime:$("#end").val()
+//
+//         },
+//         function(data,status)
+//         {
+//             $("#timebody").html(data);
+//         });
+// }

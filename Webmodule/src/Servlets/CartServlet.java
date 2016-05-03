@@ -48,39 +48,12 @@ public class CartServlet extends HttpServlet {
 
 
     }
-    protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-        String op=request.getParameter("operation");
-        PrintWriter writer=response.getWriter();
-        if(op.equals("cartInit"))
-        {
+    protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
-
-            cart.initialize();
-        }
-        else if(op.equals("buybook"))
-        {
-            String name=(String)request.getSession().getAttribute("username");
-            sendBuyMsg(name);
-            cart.clear();
-//            Integer id=userDAO.getId(name);
-//            if(cart.buy(id))
-//                writer.print("success");
-//            else writer.print("fail");
-        }
-        else if(op.equals("addCart"))
-        {
-            String bookid=request.getParameter("bookISBN");
-            Integer num=Integer.parseInt(request.getParameter("buyNum"));
-            cart.addBook(bookid,num);
-
-
-        }
-        writer.flush();
-        writer.close();
 
     }
 
-    protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         String op=request.getParameter("operation");
         PrintWriter writer=response.getWriter();
         if(op.equals("showCart"))
@@ -96,6 +69,21 @@ public class CartServlet extends HttpServlet {
             if(cart.removeBook(bookid))
                 writer.print("success!");
             else writer.print("fail :(");
+        }
+        else if(op.equals("buybook"))
+        {
+            String name=(String)request.getSession().getAttribute("username");
+            sendBuyMsg(name);
+            cart.clear();
+
+        }
+        else if(op.equals("addCart"))
+        {
+            String bookid=request.getParameter("bookISBN");
+            Integer num=Integer.parseInt(request.getParameter("buyNum"));
+            cart.addBook(bookid,num);
+
+
         }
         writer.flush();
         writer.close();

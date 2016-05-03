@@ -1,24 +1,11 @@
 
-
-function msg(str, type)
-{
-    if (type == undefined) type = 0;
-    alert(str);
-}
-
-
-function emptyCallBack()
-{
-    return;
-}
-
 /**
  * callback function demo for successful ajax
  * @param json : response information
  */
 function defaultSuccess(json)
 {
-    msg("success!  " + (typeof json == "string" ? json : JSON.stringify(json)));
+    alert("success!  " + (typeof json == "string" ? json : JSON.stringify(json)));
 }
 
 
@@ -28,10 +15,18 @@ function defaultSuccess(json)
  */
 function defaultError(error)
 {
-    msg("error " + error.responseText);
+    alert("error " + error.responseText);
 }
 
-
+/**
+ * 包装ajax
+ * @param url
+ * @param type
+ * @param data
+ * @param goodCallBack
+ * @param errorCallBack
+ * @param isAsync
+ */
 function ajax(url, type, data, goodCallBack, errorCallBack, isAsync)
 {
     if (goodCallBack == undefined) goodCallBack = defaultSuccess;
@@ -49,10 +44,13 @@ function ajax(url, type, data, goodCallBack, errorCallBack, isAsync)
     });
 }
 
-
-
-//设置cookie
-//eg setCookie("name","hayden","s20","/"); key,value,存活时间,存储路径
+/**
+ * 设置cookie
+ * @param name
+ * @param value
+ * @param time
+ * @param path
+ */
 function setCookie(name, value, time, path)
 {
     var strsec = getSec(time);
@@ -65,7 +63,12 @@ function setCookie(name, value, time, path)
     document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=" + path;
 }
 
-//读取cookies
+
+/**
+ * 获取cookie
+ * @param name
+ * @returns cookie
+ */
 function getCookie(name)
 {
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");  //or indexof

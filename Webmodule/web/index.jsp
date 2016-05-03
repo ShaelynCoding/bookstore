@@ -100,7 +100,7 @@
         </div>
         <div class="login-content ">
             <div class="form">
-                <form action="useraction" method="post">
+                <form>
                     <div class="form-group">
                         <div class="col-xs-12  ">
                             <div class="input-group">
@@ -119,7 +119,7 @@
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-4 col-xs-offset-4 ">
-                            <button type="submit" class="btn btn-sm btn-info">
+                            <button class="btn btn-sm btn-info" onclick="login()">
                                 <span class="glyphicon glyphicon-off"></span> µÇÂ¼
                             </button>
                         </div>

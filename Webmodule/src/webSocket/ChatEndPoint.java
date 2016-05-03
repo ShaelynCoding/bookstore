@@ -81,6 +81,7 @@ public class ChatEndPoint {
                 case "setUser":
                 {
                     user = (String) object.get("username");
+                    System.out.println("###########"+user+"##############");
                     broadcast(getUsers());
                     break;
                 }

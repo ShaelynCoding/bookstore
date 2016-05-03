@@ -8,9 +8,7 @@ function listen() {
 
 	socket = new WebSocket(wsURI);
 	socket.onopen = function() {
-		//displayStatus('Open');
-		//displayMessage("Connection is now open.","success");
-		// $("#content").append("<kbd>Welcome!</kbd></br>");
+
 		sendMsg(
 			{
 				action:"setUser",
@@ -85,15 +83,15 @@ function addChat(object) {
 	}
 	var contentDoc=$("#content");
 	contentDoc.prepend(singleContent);
-	var newChat=contentDoc.find(".ChatMsg");
+	var newChat=contentDoc.find("div:first");
 	newChat.fadeIn("slow");
-	newChat.find(".imgUser").html(object.user);
-	newChat.find(".msgText").html(object.text);
+	newChat.find(".imgUser").html(object.user+":"+object.text);
+	//newChat.find(".msgText").html(object.text);
 }
 
-document.onkeydown = function(event){
-	var e = event || window.event || arguments.callee.caller.arguments[0];
-	if(e && e.keyCode == 13){ // enter 键
-		chat();
-	}
-}; 
+// document.onkeydown = function(event){
+// 	var e = event || window.event || arguments.callee.caller.arguments[0];
+// 	if(e && e.keyCode == 13){ // enter 键
+// 		chat();
+// 	}
+// };

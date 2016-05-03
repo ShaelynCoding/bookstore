@@ -28,7 +28,7 @@ public class BookServlet extends HttpServlet {
     private BookAction baction;
 
     @Override
-    protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
+    protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
         String op=request.getParameter("operation");
         PrintWriter writer=response.getWriter();
         if(op.equals("showBooks")){
@@ -54,14 +54,7 @@ public class BookServlet extends HttpServlet {
             writer.print(out);
 
         }
-        writer.flush();
-        writer.close();
-
-
-    }
-    protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
-        String op=request.getParameter("operation");
-        if(op.equals("addbook"))
+        else if(op.equals("addbook"))
         {
             String id=request.getParameter("id");
             String name=request.getParameter("name");
@@ -84,6 +77,14 @@ public class BookServlet extends HttpServlet {
             String type=request.getParameter("type");
             baction.modiBook(id,price,num,type);
         }
+
+        writer.flush();
+        writer.close();
+
+
+    }
+    protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
+        //String op=request.getParameter("operation");
 
 
     }
