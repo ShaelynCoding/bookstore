@@ -24,7 +24,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right" >
             <li class="active" data-toggle="modal"   data-target="#cartModal"><a onclick="shopCart()"><span class="glyphicon glyphicon-shopping-cart"></span>shop cart</a></li>
-            <li class="active" data-toggle="modal"   data-target="#dataModal"><a onclick="showdata()"><span class = "glyphicon glyphicon-list" ></span>shop record</a></li>
+            <li class="active" data-toggle="modal"   data-target="#dataModal"><a onclick="showData()"><span class = "glyphicon glyphicon-list" ></span>shop record</a></li>
             <li class="active"><a href="chatRoom.html"><span class="glyphicon glyphicon-comment"></span>Chat Room</a></li>
             <li class="active"><a onclick="logout()"><span class = "glyphicon glyphicon-user"></span>logout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 
@@ -67,8 +67,10 @@
                     &times;
                 </button>
             </div>
-            <div class="modal-body" id="databody">
+            <div class="modal-body" >
+                <table class = "table table-bordered" id="databody" >
 
+                </table>
             </div>
         </div>
     </div>

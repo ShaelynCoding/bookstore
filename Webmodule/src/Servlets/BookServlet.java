@@ -33,56 +33,63 @@ public class BookServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
         String op=request.getParameter("operation");
         PrintWriter writer=response.getWriter();
-        if(op.equals("showBooks")){
-            String out="";
-            String role=request.getParameter("role");
-            if(role.equals("guest"))
-                out=baction.getBookByGuest(guestTypes);
-            else out=baction.getBookInfo();
-
-            System.out.println(out);
-            writer.print(out);
-
-        }
-        else if(op.equals("showDetail")){
-
-            String bookISBN=request.getParameter("bookISBN");
-            System.out.println(bookISBN);
-            String out=baction.getBookDetail(bookISBN);
-            System.out.println(out);
-            writer.print(out);
-        }
-        else if(op.equals("querybook"))
+        switch (op)
         {
-            String bookISDN=request.getParameter("bookISDN");
-            String bookName=request.getParameter("bookName");
-            String out=baction.queryBook(bookISDN,bookName);
-            writer.print(out);
+            case "showBooks":{
+                String out="";
+                String role=request.getParameter("role");
+                if(role.equals("guest"))
+                    out=baction.getBookByGuest(guestTypes);
+                else out=baction.getBookInfo();
 
+                System.out.println(out);
+                writer.print(out);
+                break;
+            }
+            case "showDetail":{
+                String bookISBN=request.getParameter("bookISBN");
+                System.out.println(bookISBN);
+                String out=baction.getBookDetail(bookISBN);
+                System.out.println(out);
+                writer.print(out);
+                break;
+            }
+            case "querybooks":{
+                String bookISDN=request.getParameter("bookISDN");
+                String bookName=request.getParameter("bookName");
+                String out=baction.queryBook(bookISDN,bookName);
+                writer.print(out);
+                break;
+            }
+            case "addbook":{
+                String id=request.getParameter("id");
+                String name=request.getParameter("name");
+                String auth=request.getParameter("auth");
+                Integer num=Integer.parseInt(request.getParameter("num"));
+                Double price=Double.parseDouble(request.getParameter("price"));
+                String type=request.getParameter("type");
+                baction.addBook(id,name,auth,type,num,price);
+                break;
+            }
+            case "delBook":{
+                String id=request.getParameter("bookISDN");
+                baction.delBook(id);
+                break;
+            }
+            case "modiBook":
+            {
+                String id=request.getParameter("bookid");
+                Double price=Double.parseDouble(request.getParameter("price"));
+                Integer num=Integer.parseInt(request.getParameter("num"));
+                String type=request.getParameter("type");
+                baction.modiBook(id,price,num,type);
+                break;
+            }
+            default:
+                break;
         }
-        else if(op.equals("addbook"))
-        {
-            String id=request.getParameter("id");
-            String name=request.getParameter("name");
-            String auth=request.getParameter("auth");
-            Integer num=Integer.parseInt(request.getParameter("num"));
-            Double price=Double.parseDouble(request.getParameter("price"));
-            String type=request.getParameter("type");
-            baction.addBook(id,name,auth,type,num,price);
-        }
-        else if(op.equals("delBook"))
-        {
-            String id=request.getParameter("bookISDN");
-            baction.delBook(id);
-        }
-        else if(op.equals("modiBook"))
-        {
-            String id=request.getParameter("bookid");
-            Double price=Double.parseDouble(request.getParameter("price"));
-            Integer num=Integer.parseInt(request.getParameter("num"));
-            String type=request.getParameter("type");
-            baction.modiBook(id,price,num,type);
-        }
+
+
 
         writer.flush();
         writer.close();
@@ -90,7 +97,7 @@ public class BookServlet extends HttpServlet {
 
     }
     protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
-        //String op=request.getParameter("operation");
+
 
 
     }

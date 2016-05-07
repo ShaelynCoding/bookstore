@@ -1,5 +1,5 @@
 package constant;
 
 public interface ConstantInterface {
-    String[] guestTypes={"Literary"};
+    String[] guestTypes={"literary"};
 }

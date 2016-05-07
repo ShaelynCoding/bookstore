@@ -56,35 +56,36 @@ public class CartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         String op=request.getParameter("operation");
         PrintWriter writer=response.getWriter();
-        if(op.equals("showCart"))
+        switch (op)
         {
-            String res=cart.getCart();
-            writer.print(res);
-
+            case "showCart":{
+                String res=cart.getCart();
+                writer.print(res);
+                break;
+            }
+            case "delCart":{
+                String bookid=request.getParameter("bookid");
+                if(cart.removeBook(bookid))
+                    writer.print("success!");
+                else writer.print("fail :(");
+                break;
+            }
+            case "buybook":{
+                String name=(String)request.getParameter("username");
+                sendBuyMsg(name);
+                cart.clear();
+                break;
+            }
+            case "addCart":{
+                String bookid=request.getParameter("bookISBN");
+                Integer num=Integer.parseInt(request.getParameter("buyNum"));
+                cart.addBook(bookid,num);
+                break;
+            }
+            default:
+                break;
         }
 
-        else if(op.equals("delCart"))
-        {
-            String bookid=request.getParameter("bookid");
-            if(cart.removeBook(bookid))
-                writer.print("success!");
-            else writer.print("fail :(");
-        }
-        else if(op.equals("buybook"))
-        {
-            String name=(String)request.getParameter("username");
-            sendBuyMsg(name);
-            cart.clear();
-
-        }
-        else if(op.equals("addCart"))
-        {
-            String bookid=request.getParameter("bookISBN");
-            Integer num=Integer.parseInt(request.getParameter("buyNum"));
-            cart.addBook(bookid,num);
-
-
-        }
         writer.flush();
         writer.close();
     }

@@ -66,11 +66,11 @@ public class CartBean implements Cart {
 
         Map map=new HashMap<String,Object>() ;
         JSONArray jsonArr = new JSONArray();
-        Iterator iter = contents.entrySet().iterator();
+        Iterator iter = contents.keySet().iterator();
         while(iter.hasNext()) {
-            HashMap.Entry entry=(HashMap.Entry)iter.next();
-            String ISBN=(String)entry.getKey();
-            Integer num=(Integer)entry.getValue();
+
+            String ISBN=(String)iter.next();
+            Integer num=(Integer)contents.get(ISBN);
             map.put("bookISBN",ISBN);
             map.put("bookName",bookDAO.getByISBN(ISBN).getBookName());
             map.put("buyNum",num);
@@ -88,12 +88,11 @@ public class CartBean implements Cart {
         InfoDAO.setEntityManager(entityManager);
         try
         {
-            Iterator iter = contents.entrySet().iterator();
+            Iterator iter = contents.keySet().iterator();
             while(iter.hasNext())
             {
-                HashMap.Entry entry=(HashMap.Entry)iter.next();
-                String ISBN=(String)entry.getKey();
-                Integer num=(Integer)entry.getValue();
+                String ISBN=(String)iter.next();
+                Integer num=(Integer)contents.get(ISBN);
                 Integer oldNum=bookDAO.getRemain(ISBN);
                 if(oldNum>=num) {
                     if(!bookDAO.modiRemain(ISBN, oldNum - num) || !InfoDAO.addInfo(customerId, ISBN, num))

@@ -44,7 +44,35 @@ function changeClick(paperArray) {
 
 }
 
+function showData()
+{
+    var cookie=getCookie("user");
+    var tmp=cookie.split("@");
+    ajax("infoaction","post",{
+        operation:"showData",
+        username:tmp[0]
+    },function (data) {
+        var jsonArr=JSON.parse(data);
+        displayData(jsonArr);
+    });
+}
+function displayData(paperArray) {
 
+    var out="<tr><td>订单编号</td><td>书本ISBN</td><td>数量</td><td>时间</td></tr>";
+
+
+    var len=0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
+    for(var i=0;i<len;i++)
+    {
+        out+=("<tr><td>"+paperArray[i].id+"</td><td>"
+        +paperArray[i].bookid+"</td><td>"+paperArray[i].buyNum
+        +"</td><td>paperArray[i].time</td></tr>");
+    }
+    $("#databody").html(out);
+
+}
 /**
  * 从购物车删除记录
  * @param bookid

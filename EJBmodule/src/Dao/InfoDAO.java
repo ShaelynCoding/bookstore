@@ -1,5 +1,7 @@
 package Dao;
 
+import entity.Information;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
@@ -8,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by lyn on 16-5-1.
@@ -41,5 +44,13 @@ public class InfoDAO {
             e.printStackTrace();
             return false;
         }
+    }
+    public static List<Information> getUserInfo(Integer userid){
+        String sql="select info from Information as info ";
+        Query query=entityManager.createQuery(sql);
+        List<Information> informations=query.getResultList();
+        return informations;
+
+
     }
 }
