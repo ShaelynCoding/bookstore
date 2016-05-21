@@ -30,6 +30,16 @@ public class InfoServlet extends HttpServlet{
                     writer.print(out);
                     break;
                 }
+                case "showStatic":{
+                    String username=request.getParameter("username");
+                    String beginTime=request.getParameter("beginTime");
+                    String endTime=request.getParameter("endTime");
+                    String bookType=request.getParameter("bookType");
+                    String out=infoAction.showStatic(username,beginTime,endTime,bookType);
+                    writer.print(out);
+                    break;
+                }
+
                 default:
                     break;
             }

@@ -54,7 +54,7 @@ public class BookServlet extends HttpServlet {
                 writer.print(out);
                 break;
             }
-            case "querybooks":{
+            case "querybook":{
                 String bookISDN=request.getParameter("bookISDN");
                 String bookName=request.getParameter("bookName");
                 String out=baction.queryBook(bookISDN,bookName);
@@ -62,13 +62,23 @@ public class BookServlet extends HttpServlet {
                 break;
             }
             case "addbook":{
+
                 String id=request.getParameter("id");
                 String name=request.getParameter("name");
                 String auth=request.getParameter("auth");
-                Integer num=Integer.parseInt(request.getParameter("num"));
-                Double price=Double.parseDouble(request.getParameter("price"));
+                String numStr=request.getParameter("num");
+                String priceStr=request.getParameter("price");
                 String type=request.getParameter("type");
-                baction.addBook(id,name,auth,type,num,price);
+                if(id!="" && name!="" && auth!="" && numStr!="" && priceStr!="" && type!="")
+                {
+                    Integer num=Integer.parseInt(numStr);
+                    Double price=Double.parseDouble(priceStr);
+                    baction.addBook(id,name,auth,type,num,price);
+                }
+
+
+
+
                 break;
             }
             case "delBook":{
@@ -83,6 +93,18 @@ public class BookServlet extends HttpServlet {
                 Integer num=Integer.parseInt(request.getParameter("num"));
                 String type=request.getParameter("type");
                 baction.modiBook(id,price,num,type);
+                break;
+            }
+            case "searchBook":
+            {
+                String search=request.getParameter("search");
+                String choice=request.getParameter("searchChoice");
+                String role=request.getParameter("role");
+                String out="";
+                if(role.equals("guest"))
+                    out=baction.getSearchBook(choice,search,guestTypes);
+                else out=baction.getSearchBook(choice,search);
+                writer.print(out);
                 break;
             }
             default:

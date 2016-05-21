@@ -9,6 +9,16 @@
 
     <security-constraint>
         <web-resource-collection>
+            <web-resource-name>SSL</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
             <web-resource-name>Manage</web-resource-name>
             <url-pattern>/manage.jsp</url-pattern>
         </web-resource-collection>

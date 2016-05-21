@@ -75,7 +75,7 @@ public class UserServlet extends HttpServlet{
                 break;
             }
             case "delUser":{
-                Integer userid=Integer.parseInt(request.getParameter("userId"));
+                Integer userid=Integer.parseInt(request.getParameter("id"));
                 userAction.delUser(userid);
                 break;
             }

@@ -93,10 +93,15 @@
 </head>
 
 <body>
+
 <div class="box">
+    <div class="text-right"><br>
+        <a onclick="switchLanguage('zh')" style="color: #3c3c3c">中文</a>&nbsp;
+        <a onclick="switchLanguage('en')" style="color: #3c3c3c">English</a>&nbsp;&nbsp;&nbsp;
+    </div>
     <div class="login-box">
         <div class="login-title text-center">
-            <h1><small>登录</small></h1>
+            <h1><small class="Login_Text">登录</small></h1>
         </div>
         <div class="login-content ">
             <div class="form">
@@ -105,7 +110,7 @@
                         <div class="col-xs-12  ">
                             <div class="input-group">
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                                <input type="text" id="username" name="username" class="form-control" placeholder="用户名">
+                                <input type="text" id="username" name="username" class="form-control Username_Text" placeholder="用户名">
                             </div>
                         </div>
                     </div>
@@ -113,26 +118,26 @@
                         <div class="col-xs-12  ">
                             <div class="input-group">
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                                <input type="text" id="password" name="password" class="form-control" placeholder="密码">
+                                <input type="password" id="password" name="password" class="form-control Password_Text" placeholder="密码">
                             </div>
                         </div>
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-4 col-xs-offset-4 ">
-                            <button class="btn btn-sm btn-info" onclick="login()">
-                                <span class="glyphicon glyphicon-off"></span> 登录
+                            <button class="btn btn-sm btn-info Login_Text" onclick="login()">
+                                <span class="glyphicon glyphicon-off"></span>登录
                             </button>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-6 link">
                             <p class="text-center remove-margin" data-toggle="modal"   data-target="#modiModal" >
-                                <small>修改密码</small>
+                                <small class="PsdModi_Text">修改密码</small>
                             </p>
                         </div>
                         <div class="col-xs-6 link">
                             <p class="text-center remove-margin" data-toggle="modal"   data-target="#regModal">
-                                <small>注册</small>
+                                <small class="Register_Text">注册</small>
                             </p>
                         </div>
                     </div>
@@ -145,22 +150,22 @@
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                用户注册
+            <div class="modal-header Register_Text">
+                注册
                 <button type="button" class="close"
                         data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
             </div>
             <div class="modal-body" >
-                <ul>用户名<input type="text" id="regname"/></ul>
-                <ul>密码 <input type="password" id="regpwd"/></ul>
-                <ul>邮件 <input type="text" id="regemail"/></ul>
+                <ul><nobr class="col-md-3 Username_Text">用户名</nobr><input type="text" id="regname"/></ul>
+                <ul><nobr class="col-md-3 Password_Text">密码 </nobr><input type="password" id="regpwd"/></ul>
+                <ul><nobr class="col-md-3 Email_Text">邮件 </nobr><input type="text" id="regemail"/></ul>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick = "register()">
-                    Submit
+                <button type="button" class="btn btn-primary Submit_Text" onclick = "register()">
+                    提交
                 </button>
             </div>
         </div>
@@ -170,22 +175,22 @@
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                密码修改
+            <div class="modal-header PsdModi_Text">
+                修改密码
                 <button type="button" class="close"
                         data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
             </div>
             <div class="modal-body" >
-                <ul>用户名<input type="text" id="modiname"/></ul>
-                <ul>原密码<input type="password" id="oldpwd"/></ul>
-                <ul>新密码<input type="password" id="newpwd"/></ul>
+                <ul><nobr class="col-md-3 Username_Text" st>用户名</nobr><input type="text" id="modiname"/></ul>
+                <ul><nobr class="col-md-3 OldPsd_Text">原密码</nobr><input type="password" id="oldpwd"/></ul>
+                <ul><nobr class="col-md-3 NewPsd_Text">新密码</nobr><input type="password" id="newpwd"/></ul>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick = "modiPwd()">
-                    Submit
+                <button type="button" class="btn btn-primary Submit_Text" onclick = "modiPwd()">
+                    提交
                 </button>
             </div>
         </div>
@@ -197,4 +202,11 @@
 <script src="UI/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="logic/common.js"></script>
 <script src="logic/user.js"></script>
+<script>
+    $(document).ready(function () {
+       switchLanguage("en");
+    });
+        
+
+</script>
 </html>

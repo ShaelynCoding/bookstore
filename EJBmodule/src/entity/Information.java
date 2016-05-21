@@ -13,7 +13,6 @@ public class Information {
     private int infoId;
     private Integer userId;
     private String bookIsdn;
-    private String bookType;
     private Integer buyNum;
     private String time;
 
@@ -47,15 +46,7 @@ public class Information {
         this.bookIsdn = bookIsdn;
     }
 
-    @Basic
-    @Column(name = "bookType")
-    public String getBookType() {
-        return bookType;
-    }
 
-    public void setBookType(String bookType) {
-        this.bookType = bookType;
-    }
 
     @Basic
     @Column(name = "buyNum")

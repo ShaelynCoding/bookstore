@@ -51,8 +51,8 @@ function displayBook(paperArray) {
         +paperArray[i].bookName+"</td><td>"+paperArray[i].bookAuth
         +"</td><td>"+paperArray[i].bookType+"</td><td>"+paperArray[i].bookNum
         +"</td><td>"+paperArray[i].bookPrice+
-        "</td><td><button type='button' class='btn btn-primary' id='change3' onclick=''>×</button></td><td>" +
-        "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#modiModal' id='change4' onclick = ''><span class='glyphicon glyphicon-pencil'></span></button></td></tr>");
+        "</td><td><button type='button' class='btn btn-default' id='change3' onclick=''>×</button>&nbsp;&nbsp;" +
+        "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modiModal' id='change4' onclick = ''><span class='glyphicon glyphicon-pencil'></span></button></td></tr>");
     }
     $("#querybody").html(out);
 
@@ -134,7 +134,7 @@ function displayUsers(paperArray) {
     {
         out+=("<tr><td>"+paperArray[i].userId+"</td><td>"
         +paperArray[i].userName+"</td><td>"+paperArray[i].userPwd+"</td><td>"+paperArray[i].userEmail
-        +"</td><td><button type='button' class='btn btn-primary' id='change5' onclick = ''>×</button></td></tr>");
+        +"</td><td><button type='button' class='btn btn-default' id='change5' onclick = ''>×</button></td></tr>");
     }
     $("#userbody").html(out);
 
@@ -163,149 +163,54 @@ function delUser(userId)
             id:userId
         });
 }
+function displayStatic(paperArray) {
 
-// function logout()
-// {
-//
-//     $.post("logout",
-//         {
-//
-//         });
-// }
-// function cateGUI()
-// {
-//     $.post("cateGUI",
-//         {
-//
-//         },
-//         function(data,status)
-//         {
-//
-//             var strs = new Array();
-//             var allType = new Array();
-//             var all = new Array();
-//             strs = data.split(";");
-//             //alert(strs.length);
-//             for (var i =0;i<strs.length-1;i++)
-//             {
-//                 var temp = strs[i].split(",");
-//                 allType[i] = temp[0];
-//                 //alert(allType);
-//                 all[i] = {value:parseInt(temp[1]),name:temp[0]};
-//                 //alert(all);
-//
-//
-//             }
-//             var option = {
-//                 tooltip : {
-//                     trigger: 'item',
-//                     formatter: "{a} <br/>{b} : {c} ({d}%)"
-//                 },
-//                 legend: {
-//                     orient : 'vertical',
-//                     x : 'left',
-//                     data:allType
-//                 },
-//                 toolbox: {
-//                     show : true,
-//                     feature : {
-//                         mark : {show: true},
-//                         dataView : {show: true, readOnly: false},
-//                         magicType : {
-//                             show: true,
-//                             type: ['pie', 'funnel'],
-//                             option: {
-//                                 funnel: {
-//                                     x: '25%',
-//                                     width: '50%',
-//                                     funnelAlign: 'center',
-//                                     max: 1548
-//                                 }
-//                             }
-//                         },
-//                         restore : {show: true},
-//                         saveAsImage : {show: true}
-//                     }
-//                 },
-//                 calculable :false,
-//                 series : [
-//                     {
-//                         name:'Book Category',
-//                         type:'pie',
-//                         radius : ['50%', '70%'],
-//                         itemStyle : {
-//                             normal : {
-//                                 label : {
-//                                     show : false
-//                                 },
-//                                 labelLine : {
-//                                     show : false
-//                                 }
-//                             },
-//                             emphasis : {
-//                                 label : {
-//                                     show : true,
-//                                     position : 'center',
-//                                     textStyle : {
-//                                         fontSize : '15',
-//                                         fontWeight : 'bold'
-//                                     }
-//                                 }
-//                             }
-//                         },
-//                         data:all
-//                     }
-//                 ]
-//             };
-//             var myChart = echarts.init(document.getElementById('cate'));
-//             myChart.setOption(option);
-//
-//         });
-//
-// }
-//
-//
-// function datauser()
-// {
-//
-//     $.post("datauser",
-//         {
-//
-//             userName:$("#udname").val()
-//
-//         },
-//         function(data,status)
-//         {
-//
-//             $("#udatabody").html(data);
-//         });
-// }
-// function datacate()
-// {
-//     $.post("datacate",
-//         {
-//
-//             bookType:$("#btype").val()
-//
-//         },
-//         function(data,status)
-//         {
-//             $("#catebody").html(data);
-//
-//         });
-//
-// }
-//
-// function dataTime()
-// {
-//     $.post("datatime",
-//         {
-//             beginTime:$("#begin").val(),
-//             endTime:$("#end").val()
-//
-//         },
-//         function(data,status)
-//         {
-//             $("#timebody").html(data);
-//         });
-// }
+    var out="<tr><td>订单编号</td><td>用户ID</td><td>书本ISBN</td><td>数量</td><td>时间</td></tr>";
+    var len=0;
+    if(paperArray!=undefined)
+        len=paperArray.length;
+    for(var i=0;i<len;i++)
+    {
+        out+=("<tr><td>"+paperArray[i].infoId+"</td><td>"+paperArray[i].userId+"</td><td>"
+        +paperArray[i].bookIsdn+"</td><td>"+paperArray[i].buyNum
+        +"</td><td>"+paperArray[i].time+"</td></tr>");
+    }
+    $("#staticbody").html(out);
+
+}
+
+function dataByUser() {
+    ajax("infoaction","post",{
+        operation:"showData",
+        username:$("#udname").val()
+    },function (data) {
+        var jsonArr=JSON.parse(data);
+        displayStatic(jsonArr);
+    });
+
+}
+function dataByTime() {
+    ajax("infoaction","post",{
+        operation:"dataByTime",
+        beginTime:$("#begin").val(),
+        endTime:$("#end").val()
+    },function (data) {
+        var jsonArr=JSON.parse(data);
+        displayStatic(jsonArr);
+    });
+    
+}
+function showStatic() {
+    ajax("infoaction","post",{
+        operation:"showStatic",
+        username:$("#udname").val(),
+        beginTime:$("#begin").val(),
+        endTime:$("#end").val(),
+        bookType:$("#btype").val()
+    },function (data) {
+        var jsonArr=JSON.parse(data);
+        displayStatic(jsonArr);
+        
+    });
+    
+}

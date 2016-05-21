@@ -46,11 +46,57 @@ public class InfoDAO {
         }
     }
     public static List<Information> getUserInfo(Integer userid){
-        String sql="select info from Information as info ";
+        String sql="select info from Information as info where info.userId="+userid;
         Query query=entityManager.createQuery(sql);
         List<Information> informations=query.getResultList();
         return informations;
 
 
+    }
+    public static List<Information> getTimeInfo(String begin,String end)
+    {
+        String sql="select info from Information as info where info.time>= '"+end+"' and info.time <= '"+begin+"'";
+        Query query=entityManager.createQuery(sql);
+        List<Information> informations=query.getResultList();
+        return informations;
+    }
+    public static List<Information> getStatic(String username,String begin,String end,String bookType)
+    {
+        String sql="select info from Information as info";
+        String condition[]=new String[]{"","","",""};
+        if(username!="")
+        {
+            userDAO.setEntity(entityManager);
+            Integer userid=userDAO.getId(username);
+            condition[0]="info.userId = "+userid;
+        }
+        if(begin!="")
+        {
+            condition[1]="info.time >= '"+begin+"'";
+        }
+        if(end!="")
+        {
+            condition[2]="info.time <= '"+end+"'";
+        }
+        if(bookType!="")
+        {
+            condition[3]="info.bookType= '"+bookType+"'";
+        }
+        String cond="";
+        for(int i=0;i<4;i++)
+        {
+            if(condition[i]=="")
+                continue;
+            else {
+                if(cond!="")
+                    cond+=" and ";
+                cond+=condition[i];
+            }
+        }
+        if(cond!="")
+            sql+=(" where "+cond);
+        Query query=entityManager.createQuery(sql);
+        List<Information> informations=query.getResultList();
+        return informations;
     }
 }

@@ -30,7 +30,35 @@ public class bookDAO {
         return outline;
 
     }
+    public static List<Book> getBySearch(String choice,String search)
+    {
+        String sql="";
+        switch (choice)
+        {
+            case "all":
+               sql="select b from book as b where b.bookIsdn like '%"+search+"%' or b.bookAuth like '%"
+                       +search+"%' or b.bookName like '%"+search+"%' or b.bookType like '%"+search+"%'";
+                break;
+            case "Isbn":
+                sql="select b from book as b where b.bookIsdn like '%"+search+"%'";
+                break;
+            case "name":
+                sql="select b from book as b where b.bookName like '%"+search+"%'";
+                break;
+            case "auth":
+                sql="select b from book as b where b.bookAuth like '%"+search+"%'";
+                break;
+            case "type":
+                sql="select b from book as b where b.bookType like '%"+search+"%'";
+                break;
+            default:
+                break;
+        }
+        Query query=entityManager.createQuery(sql);
+        List<Book> books=query.getResultList();
+        return books;
 
+    }
 
     public static Book getByISBN(String id)
     {

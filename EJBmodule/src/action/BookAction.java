@@ -19,5 +19,8 @@ public interface BookAction {
     String queryBook(String id,String name);
     void delBook(String bookid);
     void modiBook(String id,Double price,Integer num,String type);
+    String getBookByGuest(String[] types,List<Book> books);
     String getBookByGuest(String[] types);
+    String getSearchBook(String choice, String search);
+    String getSearchBook(String choice,String search,String types[]);
 }

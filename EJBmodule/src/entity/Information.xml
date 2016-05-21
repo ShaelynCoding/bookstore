@@ -14,9 +14,7 @@
             <basic name="bookIsdn">
                 <column name="bookISDN"/>
             </basic>
-            <basic name="bookType">
-                <column name="bookType"/>
-            </basic>
+            
             <basic name="buyNum">
                 <column name="buyNum"/>
             </basic>

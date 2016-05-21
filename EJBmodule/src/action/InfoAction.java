@@ -5,4 +5,7 @@ package action;
  */
 public interface InfoAction {
     String showInfo(String username);
+    String dataByTime(String begin,String end);
+    String showStatic(String username,String begin,String end,String bookType);
+
 }

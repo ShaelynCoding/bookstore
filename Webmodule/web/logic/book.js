@@ -48,9 +48,15 @@ function showData()
 {
     var cookie=getCookie("user");
     var tmp=cookie.split("@");
-    ajax("infoaction","post",{
-        operation:"showData",
-        username:tmp[0]
+    // ajax("infoaction","post",{
+    //     operation:"showData",
+    //     username:tmp[0]
+    // },function (data) {
+    //     var jsonArr=JSON.parse(data);
+    //     displayData(jsonArr);
+    // });
+    ajax("InfoServiceREST/showData/"+tmp[0],"GET",{
+
     },function (data) {
         var jsonArr=JSON.parse(data);
         displayData(jsonArr);
@@ -66,9 +72,9 @@ function displayData(paperArray) {
         len=paperArray.length;
     for(var i=0;i<len;i++)
     {
-        out+=("<tr><td>"+paperArray[i].id+"</td><td>"
-        +paperArray[i].bookid+"</td><td>"+paperArray[i].buyNum
-        +"</td><td>paperArray[i].time</td></tr>");
+        out+=("<tr><td>"+paperArray[i].infoId+"</td><td>"
+        +paperArray[i].bookIsdn+"</td><td>"+paperArray[i].buyNum
+        +"</td><td>"+paperArray[i].time+"</td></tr>");
     }
     $("#databody").html(out);
 
@@ -93,24 +99,52 @@ function delCart(bookid) {
  */
 function showDetail(bookid)
 {
+    var dataXml="<?xml version='1.0' encoding='UTF-8'?>\
+        <soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/' \
+         xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:ser='service'>\
+         <soap:Body><ser:showDetail><ser:bookISBN>"+bookid+"</ser:bookISBN></ser:showDetail></soap:Body></soap:Envelope>"
     alert("showDetail: "+bookid);
-    ajax("bookaction","post",{
-        operation:"showDetail",
-        bookISBN:bookid
-    },function(jsonStr){
-        var json = eval("(" + jsonStr + ")");
-        var papersDoc = $("#detailModal");
-        var paperHtml=papersDoc.find("#detailbody");
-        paperHtml.find(".title").html("书名： "+json.bookName);
-        paperHtml.find(".ISBN").html("ISBN： "+json.bookIsdn);
-        paperHtml.find(".author").html("作者： "+json.bookAuth);
-        paperHtml.find(".type").html("类型： "+json.bookType);
-        paperHtml.find(".remain").html("库存： "+json.bookNum);
-        paperHtml.find(".price").html("价格： "+json.bookPrice);
-        paperHtml.find("#change2").attr("onclick","addCart('"+json.bookIsdn+"')");
-
-
+    // ajax("bookaction","post",{
+    //     operation:"showDetail",
+    //     bookISBN:bookid
+    // },function(jsonStr){
+    //     var json = eval("(" + jsonStr + ")");
+    //     var papersDoc = $("#detailModal");
+    //     var paperHtml=papersDoc.find("#detailbody");
+    //     paperHtml.find(".title").html("书名： "+json.bookName);
+    //     paperHtml.find(".ISBN").html("ISBN： "+json.bookIsdn);
+    //     paperHtml.find(".author").html("作者： "+json.bookAuth);
+    //     paperHtml.find(".type").html("类型： "+json.bookType);
+    //     paperHtml.find(".remain").html("库存： "+json.bookNum);
+    //     paperHtml.find(".price").html("价格： "+json.bookPrice);
+    //     paperHtml.find("#change2").attr("onclick","addCart('"+json.bookIsdn+"')");
+    //
+    //
+    // });
+    $.ajax({
+        url:"BookServiceSOAP",
+        type:"post",
+        dataType:"xml",
+        data:dataXml,
+        complete:showBookDetail,
+        contentType:"text/xml;charset='utf-8'"
     });
+}
+function showBookDetail(xmlHttpRequest,status)
+{
+    //alert(xmlHttpRequest.responseText);
+    var jsonStr=$(xmlHttpRequest.responseXML).find('return').text();
+    var json = eval("(" + jsonStr + ")");
+    var papersDoc = $("#detailModal");
+    var paperHtml=papersDoc.find("#detailbody");
+    paperHtml.find(".title").html("书名： "+json.bookName);
+    paperHtml.find(".ISBN").html("ISBN： "+json.bookIsdn);
+    paperHtml.find(".author").html("作者： "+json.bookAuth);
+    paperHtml.find(".type").html("类型： "+json.bookType);
+    paperHtml.find(".remain").html("库存： "+json.bookNum);
+    paperHtml.find(".price").html("价格： "+json.bookPrice);
+    paperHtml.find("#change2").attr("onclick","addCart('"+json.bookIsdn+"')");
+
 }
 /**
  * 购买
@@ -153,61 +187,31 @@ function addCart(bookid) {
  */
 function displayBooks(paperArray) {
     //init
-    var papersDoc = $("#books");
-    single = single=="" ? papersDoc.html() : single;
-    papersDoc.html("");
-    var len = 0;
-    if (paperArray != undefined)
-        len = paperArray.length;
-    for (var i = 0; i < len; i++) {
-        papersDoc.append(single);
+    var papersDoc = $("#books").find("tbody");
+    var len=0;
+    if(paperArray!=undefined) len=paperArray.length;
+    var out="";
+    for(var i=0;i<len;i++)
+    {
+        out+=("<tr><td>"+paperArray[i].bookName+"</td><td>"
+        +paperArray[i].bookAuth+"</td><td>"+paperArray[i].bookPrice
+        +"</td><td><div class='active' data-toggle='modal'   data-target='#detailModal'>" +
+        "<button type='button' class='btn btn-default btn-sm' onclick='showDetail(\""+paperArray[i].bookIsdn
+        +"\")'>&nbsp;&nbsp;&nbsp;&nbsp;查看详情 &nbsp;&nbsp;&nbsp;&nbsp;</button></td></tr>");
     }
-    for (i = 0; i < len; i++) {
-        var paperHtml = papersDoc.find(".bookInfo").eq(i);
-            paperHtml.find(".title").html(paperArray[i].bookName);
-        paperHtml.find(".price").html("价格：" + paperArray[i].bookPrice);
-        paperHtml.find(".author").html("作者：" + paperArray[i].bookAuth);
-        paperHtml.find("#change").attr("onclick","showDetail('"+paperArray[i].bookIsdn+"')");
-        // var formDoc=$("#change2");
-        // var form =formDoc .html();
-        // form="<input type='hidden' name='bookISBN' value='"+paperArray[i].bookIsdn+"'"+form;
-        // paperHtml.find("#change2").html(form);
-
-
-
-    }
+    papersDoc.html(out);
 }
-
-//-----------------------------------------
-
-// function logout()
-// {
-//
-//     $.post("logout",
-//         {
-//
-//         });
-// }
-// function searchbook()
-// {
-//
-//     $.post("searchbook",
-//         {
-//             searchContext:$("#search").val()
-//         },
-//         function(data,status)
-//         {
-//             $("#searchbody").html(data);
-//         });
-// }
-// function showdata()
-// {
-//
-//     $.post("showdata",
-//         {
-//         },
-//         function(data,status)
-//         {
-//             $("#databody").html(data);
-//         });
-// }
+function searchBook() {
+    var cookie=getCookie("user");
+    var tmp=cookie.split("@");
+    ajax("bookaction","post",{
+        operation:"searchBook",
+        search:$("#search").val(),
+        searchChoice:$("#searchChoice").val(),
+        role:tmp[1]
+    },function (data) {
+        var jsonArr=JSON.parse(data);
+        displayBooks(jsonArr);
+    });
+    
+}

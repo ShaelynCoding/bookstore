@@ -3,12 +3,14 @@ package action;
 import Dao.InfoDAO;
 import Dao.userDAO;
 import entity.Information;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -27,7 +29,27 @@ public class InfoActionBean implements InfoAction{
         Integer userid= userDAO.getId(username);
         List<Information> informations= InfoDAO.getUserInfo(userid);
         JsonConfig exclude=new JsonConfig();
-        String out= JSONObject.fromObject(informations,exclude).toString();
+        String out= JSONArray.fromObject(informations,exclude).toString();
         return out;
     }
+    public String dataByTime(String begin,String end)
+    {
+        InfoDAO.setEntityManager(entityManager);
+        List<Information> informations=InfoDAO.getTimeInfo(begin, end);
+        JsonConfig exclude=new JsonConfig();
+        String out= JSONArray.fromObject(informations,exclude).toString();
+        return out;
+
+    }
+    public String showStatic(String username,String begin,String end,String bookType)
+    {
+        InfoDAO.setEntityManager(entityManager);
+        List<Information> informations=InfoDAO.getStatic(username,begin,end,bookType);
+
+        JsonConfig exclude=new JsonConfig();
+        String out= JSONArray.fromObject(informations,exclude).toString();
+        return out;
+
+    }
+
 }

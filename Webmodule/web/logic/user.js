@@ -75,3 +75,19 @@ function getUserName() {
     return tmpArr[0];
 
 }
+function switchLanguage(str) {
+    ajax("International","post",{
+        operation:"switchLanguage",
+        Language:str
+    },function (jsonStr) {
+        var resources=JSON.parse(jsonStr);
+        for(var key in resources) {
+            var fill = $("." + key + "_Text");
+            var ss = fill.text();
+            fill.attr("placeholder",resources[key]);
+            fill.text(resources[key]);
+
+        }
+    });
+
+}

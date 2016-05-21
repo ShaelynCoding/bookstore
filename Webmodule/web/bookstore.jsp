@@ -10,17 +10,33 @@
 <head>
     <title>bookstore</title>
     <link href="UI/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .vertical-center{
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%,0);
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
 
         <a class="navbar-brand" href="">Book Store</a>
 
-        <ul class="nav navbar-nav navbar-left" >
-
-            <li class="active"><INPUT type = text id = "search" size =10px /></li>
-            <li class="active" data-toggle="modal"   data-target="#searchModal"><button type="button" onclick="searchbook()">Search</button></li>
-
+        <ul class="nav navbar-nav navbar-left" style="padding: 15px;" >
+            <div class="input-group">
+                <select  id="searchChoice">
+                    <option value="all">全部</option>
+                    <option value="Isbn">ISBN</option>
+                    <option value="name">书名</option>
+                    <option value="auth">作者</option>
+                    <option value="type">种类</option>
+                </select>
+                <input type = text id = "search" size =10px  />
+                <button  onclick="searchBook()">
+                    Search
+                </button>
+            </div>
         </ul>
         <ul class="nav navbar-nav navbar-right" >
             <li class="active" data-toggle="modal"   data-target="#cartModal"><a onclick="shopCart()"><span class="glyphicon glyphicon-shopping-cart"></span>shop cart</a></li>
@@ -32,29 +48,19 @@
 
 </nav>
 <div id="books">
-    <div class="bookInfo">
-        <nav class="navbar navbar-default">
-            <ul class="nav navbar-nav navbar-left">
-                <h4 class="title"></h4>
-                <p class="author"></p>
-                <p class="price"></p>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <br>
-                <div class="active" data-toggle="modal"   data-target="#detailModal">
+    <div class="vertical-center" style="width: 80%;">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>书名</th>
+                    <th>作者</th>
+                    <th>价格</th>
+                </tr>
+            </thead>
+            <tbody>
 
-                    <button type="button" class="btn btn-default btn-sm" onclick="" id="change">
-                        &nbsp;&nbsp;&nbsp;&nbsp;查看详情 &nbsp;&nbsp;&nbsp;&nbsp;
-                    </button>
-                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <%--<div  class="input-group">--%>
-                    <%--<input type="text" id="initNum" class="col-xs-4">--%>
-                    <%--<button type="button" onclick="addCart()" id="change2">+</button>--%>
-                    <%--&nbsp;&nbsp;&nbsp;&nbsp;--%>
-                <%--</div>--%>
-            </ul>
-        </nav>
+            </tbody>
+        </table>
     </div>
 </div>
 <div class="modal fade" id="dataModal" tabindex="-1" role="dialog"
@@ -71,22 +77,6 @@
                 <table class = "table table-bordered" id="databody" >
 
                 </table>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="searchModal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close"
-                        data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-            </div>
-            <div class="modal-body" id="searchbody">
-
             </div>
         </div>
     </div>
