@@ -43,7 +43,9 @@ function changeClick(paperArray) {
     }
 
 }
-
+/**
+ * 展示上架的书籍
+ */
 function showData()
 {
     var cookie=getCookie("user");

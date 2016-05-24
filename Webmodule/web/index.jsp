@@ -124,8 +124,9 @@
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-4 col-xs-offset-4 ">
-                            <button class="btn btn-sm btn-info Login_Text" onclick="login()">
-                                <span class="glyphicon glyphicon-off"></span>µÇÂ¼
+                            <button class="btn btn-sm btn-info " onclick="login()">
+                                <span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;
+                                <nobr class="Login_Text">µÇÂ¼</nobr>
                             </button>
                         </div>
                     </div>

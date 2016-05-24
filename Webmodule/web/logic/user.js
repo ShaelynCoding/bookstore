@@ -83,7 +83,7 @@ function switchLanguage(str) {
         var resources=JSON.parse(jsonStr);
         for(var key in resources) {
             var fill = $("." + key + "_Text");
-            var ss = fill.text();
+
             fill.attr("placeholder",resources[key]);
             fill.text(resources[key]);
 
